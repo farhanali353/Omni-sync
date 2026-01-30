@@ -4,145 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omni-Sync | Farhan Ali</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00a884">
     <style>
         :root { --wa-green: #00a884; --wa-dark: #0b141a; --wa-panel: #202c33; --text-gray: #8696a0; }
         body { background: var(--wa-dark); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow: hidden; }
         .hidden { display: none !important; }
-
-        /* 1. STYLISH SPLASH SCREEN (Sab se pehle ye ayega) */
-        #splash {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .logo-icon { font-size: 70px; margin-bottom: 20px; filter: drop-shadow(0 0 15px var(--wa-green)); }
-        .prep-text { color: #555; letter-spacing: 5px; font-size: 12px; margin-bottom: 5px; }
-        .ceo-title { 
-            font-size: 38px; font-weight: 900; letter-spacing: 3px;
-            background: linear-gradient(to right, #00a884, #ffffff, #00a884);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 25px rgba(0, 168, 132, 0.7);
-        }
-
-        /* 2. AUTH SCREEN */
-        .auth-container { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; text-align: center; }
-        .wa-input { width: 85%; background: transparent; border: none; border-bottom: 2px solid var(--wa-green); color: #fff; font-size: 24px; text-align: center; margin: 30px 0; outline: none; }
-        .wa-btn { background: var(--wa-green); color: #000; border: none; padding: 15px 60px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 18px; width: 85%; }
-
-        /* 3. MAIN INTERFACE */
-        header { background: var(--wa-panel); padding: 15px 15px 0 15px; box-shadow: 0 4px 10px #000; }
-        .tabs { display: flex; margin-top: 15px; }
-        .tab { flex: 1; text-align: center; padding: 12px; color: var(--text-gray); font-weight: bold; cursor: pointer; }
-        .tab.active { color: var(--wa-green); border-bottom: 3px solid var(--wa-green); }
-        .chat-item { display: flex; padding: 15px; align-items: center; border-bottom: 1px solid #1c262d; }
-        .avatar-circle { width: 50px; height: 50px; background: #3d4a52; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
-        .fab-share { position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; background: var(--wa-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 15px #000; font-size: 28px; color: #000; cursor: pointer; }
+        #splash { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5; }
+        .ceo-title { font-size: 35px; font-weight: 900; background: linear-gradient(to right, #00a884, #fff, #00a884); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header { background: var(--wa-panel); padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .scan-btn { background: var(--wa-green); border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        #installBanner { background: #1c262d; padding: 15px; border-top: 2px solid var(--wa-green); position: fixed; bottom: 0; width: 100%; display: none; }
     </style>
 </head>
 <body>
 
     <div id="splash">
-        <div class="logo-icon">🌐</div>
-        <div class="prep-text">PREPARED BY</div>
         <div class="ceo-title">FARHAN ALI</div>
+        <div style="color: #555; margin-top: 10px;">OMNI-SYNC MESH v1.0</div>
     </div>
 
-    <div id="authScreen" class="hidden auth-container">
-        <h2 style="color: var(--wa-green);">Omni-Sync Mesh</h2>
-        <p style="color: var(--text-gray);">Enter your number to join the decentralized network.</p>
-        <input type="tel" id="mobileNum" class="wa-input" placeholder="+92 3XX XXXXXXX">
-        <button class="wa-btn" onclick="verifyNow()">START MESHING</button>
-    </div>
-
-    <div id="mainApp" class="hidden" style="height: 100vh; display: flex; flex-direction: column;">
+    <div id="mainApp" class="hidden">
         <header>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size: 24px; font-weight: bold; color: var(--wa-green);">Omni-Sync</span>
-                <div style="display: flex; gap: 20px;">
-                    <span onclick="shareOmni()" style="cursor:pointer; font-size: 22px;">📲</span>
-                    <span style="font-size: 22px;">⋮</span>
-                </div>
-            </div>
-            <div class="tabs">
-                <div id="t1" class="tab active" onclick="switchTab('chats')">CHATS</div>
-                <div id="t2" class="tab" onclick="switchTab('status')">STATUS</div>
-                <div id="t3" class="tab" onclick="switchTab('calls')">CALLS</div>
-            </div>
+            <span style="color: var(--wa-green); font-size: 20px; font-weight: bold;">Omni-Sync</span>
+            <button class="scan-btn" onclick="startRealScan()">🔍 SCAN</button>
         </header>
-
-        <div id="chatsScreen" style="flex: 1; overflow-y: auto;">
-            <div class="chat-item">
-                <div class="avatar-circle">A</div>
-                <div style="margin-left:15px;"><b>Ahmed (Pakistan)</b><br><small style="color:var(--text-gray);">Mesh Node: Connected</small></div>
-            </div>
-            <div class="chat-item">
-                <div class="avatar-circle">L</div>
-                <div style="margin-left:15px;"><b>Liam (UK)</b><br><small style="color:var(--text-gray);">Satellite Relay: Active</small></div>
-            </div>
+        <div id="meshList" style="padding: 20px; text-align: center; color: var(--text-gray);">
+            Searching for nearby mesh nodes...
         </div>
+    </div>
 
-        <div id="statusScreen" class="hidden" style="flex: 1; padding: 20px; color: var(--text-gray);">
-            No status updates from nearby mesh nodes.
+    <div id="installBanner">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Install Omni-Sync App?</span>
+            <button onclick="installApp()" style="background:var(--wa-green); border:none; padding:8px 15px; border-radius:5px; font-weight:bold;">INSTALL</button>
         </div>
-
-        <div id="callsScreen" class="hidden" style="flex: 1; padding: 20px; color: var(--text-gray);">
-            No recent mesh calls.
-        </div>
-
-        <div class="fab-share" onclick="shareOmni()">📲</div>
     </div>
 
     <script>
-        // 1. Splash logic (4 seconds for maximum impact)
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+
         setTimeout(() => {
             document.getElementById('splash').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('splash').style.display = 'none';
-                document.getElementById('authScreen').classList.remove('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
             }, 500);
-        }, 4000);
+        }, 3000);
 
-        // 2. Verification logic
-        function verifyNow() {
-            let n = document.getElementById('mobileNum').value;
-            if(n.length < 10) { alert("Please enter a valid number"); return; }
-            document.getElementById('authScreen').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-        }
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBanner').style.display = 'block';
+        });
 
-        // 3. Tab switching
-        function switchTab(type) {
-            document.getElementById('chatsScreen').classList.add('hidden');
-            document.getElementById('statusScreen').classList.add('hidden');
-            document.getElementById('callsScreen').classList.add('hidden');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-
-            if(type === 'chats') {
-                document.getElementById('chatsScreen').classList.remove('hidden');
-                document.getElementById('t1').classList.add('active');
-            } else if(type === 'status') {
-                document.getElementById('statusScreen').classList.remove('hidden');
-                document.getElementById('t2').classList.add('active');
-            } else {
-                document.getElementById('callsScreen').classList.remove('hidden');
-                document.getElementById('t3').classList.add('active');
+        async function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                document.getElementById('installBanner').style.display = 'none';
             }
         }
 
-        // 4. REAL SHARE FUNCTION (For Mobile)
-        async function shareOmni() {
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Omni-Sync Mesh',
-                        text: 'Farhan Ali ki banayi hui decentralized app check karein!',
-                        url: window.location.href
-                    });
-                } catch (e) { console.log("Share cancelled"); }
-            } else {
-                alert("Please open this link in Mobile Chrome to use the Share feature: " + window.location.href);
-            }
+        async function startRealScan() {
+            try {
+                const device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
+                alert("Node Connected: " + device.name);
+            } catch (e) { alert("Bluetooth scan cancelled."); }
         }
     </script>
 </body>
-  </html>
-  
+</html>
