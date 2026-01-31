@@ -3,167 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Omni-Sync Pro | Farhan Ali</title>
+    <title>Omni-Sync Global | Farhan Ali</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
     <style>
-        :root { --wa-green: #00a884; --wa-dark: #111b21; --wa-panel: #202c33; --wa-search: #2a3942; }
-        body, html { margin: 0; padding: 0; background: var(--wa-dark); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; height: 100%; overflow: hidden; }
+        :root { --wa-green: #00a884; --wa-dark: #111b21; --wa-panel: #202c33; }
+        body { margin: 0; background: var(--wa-dark); color: white; font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         .hidden { display: none !important; }
-
-        /* 1. VIP SPLASH SCREEN (Sab se pehle ye ayega) */
-        #splash { 
-            position: fixed; inset: 0; background: #000; z-index: 9999; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-        }
-        .prep-text { color: #8696a0; letter-spacing: 5px; font-size: 12px; margin-bottom: 10px; animation: fadeIn 2s; }
-        .ceo-name { 
-            font-size: 35px; font-weight: 900; letter-spacing: 2px;
-            background: linear-gradient(to right, #00a884, #ffffff, #00a884);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 168, 132, 0.5);
-            animation: slideUp 1.5s ease;
-        }
-
-        /* 2. MAIN USER LIST SCREEN */
-        #userListScreen { height: 100vh; display: flex; flex-direction: column; }
-        header { background: var(--wa-panel); padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        
-        /* Search Bar */
-        .search-container { background: var(--wa-dark); padding: 10px; }
-        .search-box { background: var(--wa-search); border-radius: 10px; display: flex; align-items: center; padding: 8px 15px; }
-        .search-box input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 16px; }
-
-        .contact { padding: 15px; border-bottom: 0.5px solid #222; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
-        .contact:hover { background: #202c33; }
-        .avatar { width: 50px; height: 50px; background: #3d464d; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-
-        /* 3. WHATSAPP STYLE CHAT SCREEN */
-        #chatScreen { position: fixed; inset: 0; background: #0b141a; display: flex; flex-direction: column; z-index: 5000; }
-        .chat-header { background: var(--wa-panel); padding: 10px; display: flex; align-items: center; justify-content: space-between; }
-        .chat-info { display: flex; align-items: center; gap: 10px; }
-        .icons { display: flex; gap: 20px; font-size: 20px; color: #d1d7db; margin-right: 10px; }
-
-        #messages { 
-            flex: 1; padding: 15px; overflow-y: auto; 
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            background-size: contain; display: flex; flex-direction: column;
-        }
-        .bubble { padding: 8px 12px; border-radius: 8px; margin-bottom: 5px; max-width: 75%; font-size: 15px; line-height: 1.4; }
-        .sent { background: #005c4b; align-self: flex-end; border-top-right-radius: 0; }
-        .received { background: #202c33; align-self: flex-start; border-top-left-radius: 0; }
-
-        .input-bar { background: var(--wa-panel); padding: 10px; display: flex; align-items: center; gap: 10px; }
-        .input-bar input { flex: 1; background: #2a3942; border: none; padding: 12px; border-radius: 25px; color: white; outline: none; }
-        .btn-send { background: var(--wa-green); border: none; width: 45px; height: 45px; border-radius: 50%; color: #000; cursor: pointer; font-size: 20px; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        #splash { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .ceo-name { font-size: 32px; font-weight: 900; color: var(--wa-green); text-shadow: 0 0 15px var(--wa-green); }
+        header { background: var(--wa-panel); padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        #messages { flex: 1; overflow-y: auto; padding: 15px; background: #0b141a; display: flex; flex-direction: column; }
+        .bubble { padding: 10px; margin: 5px; border-radius: 10px; max-width: 80%; font-size: 14px; position: relative; }
+        .sent { background: #005c4b; align-self: flex-end; }
+        .received { background: #232d36; align-self: flex-start; }
+        .img-msg { width: 100%; border-radius: 8px; margin-top: 5px; }
+        .input-bar { background: var(--wa-panel); padding: 10px; display: flex; gap: 10px; align-items: center; }
+        input { flex: 1; background: #2a3942; border: none; padding: 12px; border-radius: 20px; color: white; outline: none; }
     </style>
 </head>
 <body>
 
     <div id="splash">
-        <div class="prep-text">PREPARED BY</div>
+        <div style="color:#8696a0; letter-spacing:5px; font-size:10px;">PREPARED BY</div>
         <div class="ceo-name">FARHAN ALI</div>
     </div>
 
-    <div id="userListScreen" class="hidden">
+    <div id="mainApp" style="display:flex; flex-direction:column; height:100vh;">
         <header>
-            <div style="font-size: 22px; font-weight: bold; color: var(--wa-green);">Omni-Sync</div>
-            <div style="display: flex; gap: 20px; font-size: 18px;">
-                <span>📷</span> <span>🔍</span> <span>⋮</span>
-            </div>
+            <div style="font-weight:bold;">Omni-Sync <span style="color:var(--wa-green)">LIVE</span></div>
+            <div style="font-size: 12px; color: #8696a0;">Farhan Ali Project</div>
         </header>
 
-        <div class="search-container">
-            <div class="search-box">
-                <span style="margin-right: 10px; color: #8696a0;">🔍</span>
-                <input type="text" id="searchInput" onkeyup="searchUser()" placeholder="Search contacts...">
-            </div>
-        </div>
-
-        <div id="contactsList" style="flex:1; overflow-y:auto;">
-            <div class="contact" onclick="openChat('Farhan Ali (CEO)', 'FA')">
-                <div class="avatar" style="background: var(--wa-green); color: #000;">FA</div>
-                <div><div class="name">Farhan Ali (CEO)</div><small style="color:#8696a0;">Online</small></div>
-            </div>
-            <div class="contact" onclick="openChat('Arsalan', 'AR')">
-                <div class="avatar">AR</div>
-                <div><div class="name">Arsalan</div><small style="color:#8696a0;">Hey! Omni-Sync is great.</small></div>
-            </div>
-            <div class="contact" onclick="openChat('Zeeshan', 'ZE')">
-                <div class="avatar">ZE</div>
-                <div><div class="name">Zeeshan</div><small style="color:#8696a0;">Available</small></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="chatScreen" class="hidden">
-        <div class="chat-header">
-            <div class="chat-info">
-                <span onclick="closeChat()" style="font-size: 24px; cursor: pointer; margin-right: 5px;">←</span>
-                <div id="chatAvatar" class="avatar" style="width:35px; height:35px; font-size: 12px; margin-right: 5px;"></div>
-                <div style="display: flex; flex-direction: column;">
-                    <span id="chatName" style="font-weight: bold;">User Name</span>
-                    <small style="font-size: 10px; color: #8696a0;">Online</small>
-                </div>
-            </div>
-            <div class="icons">
-                <span>📹</span> <span>📞</span> <span>⋮</span>
-            </div>
-        </div>
-
-        <div id="messages">
-            <div class="bubble received">Hello! How can I help you today?</div>
-        </div>
+        <div id="messages"></div>
 
         <div class="input-bar">
-            <span style="font-size: 22px; color: #8696a0;">+</span>
-            <input type="text" id="mInput" placeholder="Message">
-            <button class="btn-send" onclick="sendMsg()">✈</button>
+            <label for="fIn" style="cursor:pointer; font-size:22px;">📎</label>
+            <input type="file" id="fIn" style="display:none" accept="image/*,video/*" onchange="uploadFile(this)">
+            <input type="text" id="mIn" placeholder="Type message...">
+            <button onclick="sendText()" style="background:var(--wa-green); border:none; width:45px; height:45px; border-radius:50%;">✈</button>
         </div>
     </div>
 
     <script>
-        // Splash screen for 3 seconds
-        setTimeout(() => {
-            document.getElementById('splash').style.display = 'none';
-            document.getElementById('userListScreen').classList.remove('hidden');
-        }, 3000);
+        // Aapka Firebase Code (Already Applied!)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSBjud7mbGqACBs80582RUy4-A-p_jR70",
+            authDomain: "omnisync-92600.firebaseapp.com",
+            projectId: "omnisync-92600",
+            storageBucket: "omnisync-92600.firebasestorage.app",
+            messagingSenderId: "144024375181",
+            appId: "1:144024375181:web:073eec8256ed14c46f04c6"
+        };
 
-        // Search Logic
-        function searchUser() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let contacts = document.getElementsByClassName('contact');
-            for (let i = 0; i < contacts.length; i++) {
-                let name = contacts[i].getElementsByClassName('name')[0].innerText.toLowerCase();
-                contacts[i].style.display = name.includes(input) ? "" : "none";
-            }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 3000);
+
+        // Send Text Message
+        function sendText() {
+            const txt = document.getElementById('mIn').value;
+            if(!txt) return;
+            db.collection("chats").add({
+                text: txt,
+                type: 'text',
+                time: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            document.getElementById('mIn').value = "";
         }
 
-        // Chat Management
-        function openChat(name, initials) {
-            document.getElementById('chatName').innerText = name;
-            document.getElementById('chatAvatar').innerText = initials;
-            document.getElementById('chatScreen').classList.remove('hidden');
+        // Upload Picture/Video
+        async function uploadFile(input) {
+            const file = input.files[0];
+            if(!file) return;
+            alert("Farhan Ali bhai, File upload ho rahi hai...");
+            const ref = storage.ref('omni/' + Date.now() + "_" + file.name);
+            await ref.put(file);
+            const url = await ref.getDownloadURL();
+            db.collection("chats").add({
+                url: url,
+                type: file.type.startsWith('image') ? 'img' : 'vid',
+                time: firebase.firestore.FieldValue.serverTimestamp()
+            });
         }
 
-        function closeChat() {
-            document.getElementById('chatScreen').classList.add('hidden');
-        }
-
-        function sendMsg() {
-            const input = document.getElementById('mInput');
-            if (!input.value.trim()) return;
-            
-            const msgBox = document.getElementById('messages');
-            const div = document.createElement('div');
-            div.className = 'bubble sent';
-            div.innerText = input.value;
-            msgBox.appendChild(div);
-            
-            input.value = "";
-            msgBox.scrollTop = msgBox.scrollHeight;
-        }
+        // Real-time Display
+        db.collection("chats").orderBy("time").onSnapshot(snap => {
+            const box = document.getElementById('messages');
+            box.innerHTML = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                const div = document.createElement('div');
+                div.className = 'bubble sent';
+                if(d.type === 'img') div.innerHTML = `<img src="${d.url}" class="img-msg">`;
+                else if(d.type === 'vid') div.innerHTML = `<video src="${d.url}" controls class="img-msg"></video>`;
+                else div.innerText = d.text;
+                box.appendChild(div);
+            });
+            box.scrollTop = box.scrollHeight;
+        });
     </script>
 </body>
 </html>
