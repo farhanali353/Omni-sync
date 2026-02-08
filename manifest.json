@@ -1,11 +1,17 @@
 {
   "name": "Farhan Pro Bot",
   "short_name": "Farhan Bot",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0b141a",
   "theme_color": "#00a884",
+  "description": "Professional Trading Bot by Farhan Ali",
   "icons": [
+    {
+      "src": "https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
     {
       "src": "https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg",
       "sizes": "512x512",
