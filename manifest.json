@@ -1,15 +1,15 @@
 {
   "name": "Farhan Pro Bot",
-  "short_name Farhan Bot",
+  "short_name": "Farhan Bot",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0b141a",
   "theme_color": "#00a884",
   "icons": [
     {
-      "srchttps://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg",
+      "src": "https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg"
     }
   ]
 }
