@@ -1,1 +1,1 @@
-# Omni-sync
+# Farhan Pro Bot
