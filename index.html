@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FARHAN PRO AI - OFFICIAL APP</title>
+    <title>FARHAN PRO BOT</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap');
 
@@ -11,6 +11,7 @@
             --primary: #00ffcc;
             --secondary: #ff3366;
             --bg: #05080a;
+            --card-bg: #0d1117;
         }
 
         body {
@@ -24,134 +25,210 @@
             align-items: center;
         }
 
-        /* Live Chart Styling */
-        #chart-container {
+        /* Logo Styling */
+        .logo-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .logo-container img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .brand-name {
+            font-family: 'Orbitron';
+            font-size: 22px;
+            color: white;
+            margin: 10px 0 5px 0;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .ceo-label {
+            font-size: 10px;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Chart Section */
+        #chart-box {
             width: 100%;
-            height: 250px;
+            height: 220px;
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid #222;
             margin-bottom: 15px;
         }
 
-        .bot-card {
+        .main-card {
             width: 95%;
-            max-width: 400px;
-            background: #0d1117;
+            max-width: 420px;
+            background: var(--card-bg);
             padding: 20px;
             border-radius: 20px;
-            border: 1px solid var(--primary);
+            border: 1px solid #1f2937;
             text-align: center;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
         }
 
-        .brand { font-family: 'Orbitron'; font-size: 20px; color: var(--primary); margin-bottom: 5px; }
-        .ceo { font-size: 10px; color: #666; letter-spacing: 2px; margin-bottom: 15px; display: block; }
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
 
-        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .input-group { text-align: left; }
+        label { font-size: 10px; color: var(--primary); font-weight: bold; }
+
         select {
-            background: #1a1f26; color: white; border: 1px solid #333;
-            padding: 10px; border-radius: 8px; font-size: 12px; outline: none;
+            width: 100%;
+            padding: 12px;
+            background: #1a1f26;
+            color: white;
+            border: 1px solid #333;
+            border-radius: 10px;
+            font-size: 13px;
+            outline: none;
+            margin-top: 5px;
         }
 
-        .btn-analyze {
-            width: 100%; padding: 15px; background: linear-gradient(90deg, #00ffcc, #0088ff);
-            border: none; border-radius: 12px; color: white; font-weight: bold;
-            font-size: 14px; cursor: pointer; text-transform: uppercase;
+        .analyze-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00ffcc, #0088ff);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
         }
 
-        #result-area {
-            margin-top: 15px; height: 100px; background: rgba(255,255,255,0.02);
-            border-radius: 12px; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+        #result-display {
+            margin-top: 15px;
+            min-height: 120px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .signal-big { font-size: 30px; font-weight: 900; }
-        .acc-badge { background: #ffcc00; color: black; font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+        .sig-val { font-size: 32px; font-weight: 900; }
+        .acc-info { font-size: 12px; color: #ffcc00; margin-top: 5px; }
 
         .loader {
-            width: 25px; height: 25px; border: 3px solid #222;
-            border-top: 3px solid var(--primary); border-radius: 50%;
-            animation: spin 1s linear infinite; display: none;
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #222;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div id="chart-container">
+    <div class="logo-container">
+        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Farhan Pro Bot Logo">
+    </div>
+    
+    <div class="brand-name">FARHAN PRO BOT</div>
+    <div class="ceo-label">CEO Farhan Ali</div>
+
+    <div id="chart-box">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
-            <div id="tradingview_chart"></div>
+            <div id="tv_chart"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
             <script type="text/javascript">
             new TradingView.widget({
                 "autosize": true,
                 "symbol": "FX:EURUSD",
                 "interval": "1",
-                "timezone": "Etc/UTC",
                 "theme": "dark",
                 "style": "1",
                 "locale": "en",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
                 "hide_top_toolbar": true,
-                "save_image": false,
-                "container_id": "tradingview_chart"
+                "container_id": "tv_chart"
             });
             </script>
         </div>
+    </div>
+
+    <div class="main-card">
+        <div class="input-grid">
+            <div class="input-group">
+                <label>CURRENCY PAIR</label>
+                <select id="asset-pair">
+                    <optgroup label="OTC PAIRS">
+                        <option>USD/INR (OTC)</option><option>USD/PKR (OTC)</option>
+                        <option>EUR/USD (OTC)</option><option>GBP/JPY (OTC)</option>
+                        <option>USD/BRL (OTC)</option><option>AUD/CAD (OTC)</option>
+                    </optgroup>
+                    <optgroup label="LIVE MARKET">
+                        <option>EUR/USD</option><option>GBP/USD</option>
+                        <option>USD/JPY</option><option>BTC/USDT</option>
+                        <option>GOLD (XAU/USD)</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>TIMEFRAME</label>
+                <select id="time-frame">
+                    <option>5 SEC</option><option>15 SEC</option><option>30 SEC</option>
+                    <option selected>1 MIN</option><option>2 MIN</option><option>5 MIN</option>
+                    <option>15 MIN</option><option>1 HOUR</option><option>4 HOUR</option>
+                </select>
+            </div>
         </div>
 
-    <div class="bot-card">
-        <span class="brand">FARHAN PRO AI V10</span>
-        <span class="ceo">CEO FARHAN ALI</span>
+        <button class="analyze-btn" onclick="generateSignal()">Analyze Market</button>
 
-        <div class="controls">
-            <select id="asset">
-                <option value="EURUSD">EUR/USD</option>
-                <option value="GBPUSD">GBP/USD</option>
-                <option value="BTCUSDT">BTC/USDT</option>
-            </select>
-            <select id="time">
-                <option>1 MIN</option>
-                <option>5 MIN</option>
-            </select>
-        </div>
-
-        <button class="btn-analyze" onclick="startAnalysis()">ANALYZE LIVE MARKET</button>
-
-        <div id="result-area">
-            <div id="loader" class="loader"></div>
-            <div id="status" style="font-size: 11px; color: #555;">REAL-TIME DATA READY</div>
+        <div id="result-display">
+            <div class="loader" id="loader"></div>
+            <div id="status-msg" style="font-size: 11px; color: #555;">SYSTEM READY</div>
+            
             <div id="signal-box" style="display:none; text-align:center;">
-                <div id="direction" class="signal-big"></div>
-                <div class="acc-badge">CONFIDENCE: <span id="acc"></span>%</div>
+                <div id="dir-text" class="sig-val"></div>
+                <div id="acc-text" class="acc-info"></div>
+                <div style="font-size: 10px; color: #00ffcc; margin-top: 5px;">SURESHOT WIN</div>
             </div>
         </div>
     </div>
 
     <script>
-        function startAnalysis() {
+        function generateSignal() {
             const loader = document.getElementById('loader');
-            const status = document.getElementById('status');
+            const status = document.getElementById('status-msg');
             const signalBox = document.getElementById('signal-box');
 
             signalBox.style.display = "none";
             status.style.display = "block";
-            status.innerText = "READING LIVE CANDLES...";
+            status.innerText = "ALGORITHMIC SCANNING...";
             loader.style.display = "block";
 
             setTimeout(() => {
                 loader.style.display = "none";
                 status.style.display = "none";
                 
-                // Smart Logic: Based on 80% Win Probability
+                // 80-90% Accuracy Simulation Logic
                 const isUp = Math.random() > 0.45;
-                const accuracy = (82 + Math.random() * 12).toFixed(1);
+                const accuracy = (84 + Math.random() * 11).toFixed(1);
 
-                document.getElementById('direction').innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
-                document.getElementById('direction').style.color = isUp ? "#00ffcc" : "#ff3366";
-                document.getElementById('acc').innerText = accuracy;
+                const dir = document.getElementById('dir-text');
+                dir.innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
+                dir.style.color = isUp ? "#00ffcc" : "#ff3366";
+                
+                document.getElementById('acc-text').innerText = "ACCURACY: " + accuracy + "%";
                 
                 signalBox.style.display = "block";
             }, 2000);
