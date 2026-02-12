@@ -3,121 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FARHAN PRO BOT - ALL ASSETS</title>
+    <title>FARHAN PRO - LIVE BITUNIX CHART</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap');
-        :root { --primary: #00ffcc; --secondary: #ff3366; --bg: #05080a; --card-bg: #0d1117; --gold: #ffcc00; }
+        :root { --primary: #00ffcc; --secondary: #ff3366; --bg: #05080a; --card-bg: #0d1117; --gold: #ffcc00; --bitunix: #f39c12; }
         
         body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
-        /* Floating Buttons */
-        .important-notice-box { position: fixed; top: 10px; left: 10px; z-index: 3000; }
-        .notice-trigger { background: rgba(255, 51, 102, 0.1); border: 1px solid var(--secondary); color: var(--secondary); padding: 6px 15px; border-radius: 5px; font-family: 'Orbitron'; font-size: 11px; cursor: pointer; }
-        .notice-content { display: none; position: absolute; top: 40px; left: 0; width: 280px; background: rgba(13, 17, 23, 0.98); border: 1px solid var(--secondary); padding: 15px; border-radius: 10px; font-size: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); line-height: 1.6; }
-        .important-notice-box:hover .notice-content { display: block; }
+        .exchange-switcher { position: fixed; top: 10px; left: 10px; z-index: 3000; display: flex; gap: 5px; }
+        .switch-btn { background: #1a1f26; border: 1px solid #333; color: #888; padding: 6px 12px; border-radius: 5px; font-size: 10px; font-family: 'Orbitron'; cursor: pointer; }
+        .switch-btn.active { border-color: var(--primary); color: var(--primary); background: rgba(0, 255, 204, 0.1); }
+        .btn-bitunix-active { border-color: var(--bitunix) !important; color: var(--bitunix) !important; }
 
-        .share-gift-btn { position: fixed; top: 55px; left: 10px; background: rgba(255, 204, 0, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 15px; border-radius: 5px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer; z-index: 2500; animation: glow 1.5s infinite; }
-        .pro-badge { position: fixed; top: 10px; right: 10px; background: linear-gradient(45deg, var(--gold), #ff8800); color: black; font-family: 'Orbitron'; font-weight: 900; padding: 6px 18px; border-radius: 50px; cursor: pointer; border: none; z-index: 3000; box-shadow: 0 0 15px var(--gold); }
+        .pro-badge { position: fixed; top: 10px; right: 10px; background: linear-gradient(45deg, var(--gold), #ff8800); color: black; font-family: 'Orbitron'; font-weight: 900; padding: 6px 18px; border-radius: 50px; cursor: pointer; border: none; z-index: 3000; }
 
-        .logo-container { margin-top: 80px; text-align: center; }
-        .logo-container img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary); }
-        .brand-name { font-family: 'Orbitron'; font-size: 22px; text-shadow: 0 0 10px var(--primary); margin: 10px 0 0 0; }
-        .ceo-label { font-size: 10px; color: #666; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+        .logo-container { margin-top: 60px; text-align: center; }
+        .logo-container img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary); }
         
-        #chart-box { width: 100%; height: 260px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; }
+        /* Fixed Chart Height for Live Feel */
+        #chart-box { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; background: #000; }
+        
         .main-card { width: 95%; max-width: 480px; background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1f2937; text-align: center; position: relative; }
         
-        .price-tag { color: var(--gold); font-size: 22px; font-weight: bold; margin: 10px 0; font-family: 'Orbitron'; }
-        .payment-methods { font-size: 11px; color: var(--primary); margin-bottom: 15px; border: 1px dashed #333; padding: 8px; border-radius: 8px; }
+        .theme-bitunix { border-color: var(--bitunix) !important; }
+        select { width: 100%; padding: 12px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 10px; font-size: 12px; margin-bottom: 10px; }
+        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; }
 
-        #vip-screen, #share-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 10, 0.98); border-radius: 25px; z-index: 100; flex-direction: column; justify-content: center; align-items: center; padding: 25px; box-sizing: border-box; border: 1px solid var(--gold); }
-        
-        input { background: #111; border: 1px solid var(--gold); color: white; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 10px; width: 90%; font-size: 14px; outline: none; }
-        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 1px; }
-
-        @keyframes glow { 0% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 15px var(--gold); } 100% { box-shadow: 0 0 5px var(--gold); } }
+        #vip-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 10, 0.98); border-radius: 25px; z-index: 100; flex-direction: column; justify-content: center; align-items: center; padding: 25px; border: 1px solid var(--gold); }
     </style>
 </head>
 <body>
 
-    <div class="important-notice-box">
-        <div class="notice-trigger">⚠️ NOTICE</div>
-        <div class="notice-content">
-            <strong style="color:var(--secondary)">FREE MODE WARNING:</strong><br>
-            Signals in Free Mode have 75% accuracy.
-            <hr style="border:0.5px solid #333; margin:10px 0;">
-            <strong style="color:var(--primary)">VIP PRO:</strong><br>
-            Get 98% SureShot signals and personal support.
-        </div>
+    <div class="exchange-switcher">
+        <button id="btn-quotex" class="switch-btn active" onclick="switchExchange('quotex')">QUOTEX</button>
+        <button id="btn-bitunix" class="switch-btn" onclick="switchExchange('bitunix')">BITUNIX</button>
     </div>
 
-    <button class="share-gift-btn" onclick="toggleShareScreen()">🎁 FREE VIP GIFT</button>
     <button class="pro-badge" onclick="toggleVipScreen()">PRO</button>
 
-    <div class="logo-container"><img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Logo"></div>
-    <div class="brand-name">FARHAN PRO BOT</div>
-    <div class="ceo-label">CEO Farhan Ali</div>
+    <div class="logo-container">
+        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Logo">
+        <div id="exchange-label" style="font-size: 10px; color: var(--primary); margin-top: 5px; font-family: 'Orbitron'; uppercase">QUOTEX MODE</div>
+    </div>
 
-    <div id="chart-box"><div id="tv_chart" style="height:100%; width:100%;"></div></div>
+    <div id="chart-box">
+        <div id="tv_chart" style="height:100%; width:100%;"></div>
+    </div>
 
-    <div class="main-card">
+    <div class="main-card" id="bot-card">
         <div id="vip-screen">
-            <h3 style="color:var(--gold); font-family:'Orbitron'; margin:0;">VIP ACTIVATION</h3>
-            <div class="price-tag">PKR 1999 | $ 6.99</div>
-            <div class="payment-methods">
-                BINANCE • UBL BANK • JAZZCASH<br>
-                <span style="color:white; font-size:12px;">WhatsApp: +923136908663</span>
-            </div>
-            <input type="password" id="vip-pass" placeholder="Enter Your Secret Key">
-            <button class="analyze-btn" style="background:var(--gold); color:black;" onclick="activateVip()">UNLOCK VIP NOW</button>
-            <button style="background:none; border:none; color:#555; margin-top:20px; cursor:pointer;" onclick="toggleVipScreen()">Cancel</button>
+            <h3 style="color:var(--gold); font-family:'Orbitron';">VIP ACTIVATION</h3>
+            <p style="font-size: 11px;">WhatsApp: +923136908663</p>
+            <input type="password" id="vip-pass" style="background:#111; border:1px solid var(--gold); color:white; padding:10px; border-radius:5px; text-align:center;" placeholder="Enter Key">
+            <button class="analyze-btn" style="background:var(--gold); color:black; margin-top:10px;" onclick="activateVip()">UNLOCK</button>
+            <button style="background:none; border:none; color:#555; margin-top:15px;" onclick="toggleVipScreen()">Close</button>
         </div>
 
-        <div id="share-screen">
-            <h3 style="color:var(--gold); font-family:'Orbitron';">GET FREE VIP</h3>
-            <p style="font-size: 11px; color:#ccc;">Share bot with 50 people to get free key!</p>
-            <button class="analyze-btn" style="background:var(--primary); color:black;" onclick="copyAndShare()">SHARE NOW</button>
-            <p id="copy-msg" style="font-size: 11px; color: #00ffcc; margin-top: 15px; display: none;">✅ Link Copied!</p>
-            <button style="background:none; border:none; color:#555; margin-top:20px; cursor:pointer;" onclick="toggleShareScreen()">Close</button>
-        </div>
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
-            <select id="asset-pair" style="padding:10px; background:#1a1f26; color:white; border-radius:8px;" onchange="updateChart()">
-                <optgroup label="Forex Pairs">
-                    <option value="FX:EURUSD">EUR/USD</option>
-                    <option value="FX:GBPUSD">GBP/USD</option>
-                    <option value="FX:USDJPY">USD/JPY</option>
-                    <option value="FX:AUDUSD">AUD/USD</option>
-                    <option value="FX:USDCAD">USD/CAD</option>
-                    <option value="FX:USDCHF">USD/CHF</option>
-                    <option value="FX:NZDUSD">NZD/USD</option>
-                </optgroup>
-                <optgroup label="Crypto & Gold">
-                    <option value="OANDA:XAUUSD">GOLD (XAU)</option>
-                    <option value="BINANCE:BTCUSDT">BITCOIN (BTC)</option>
-                    <option value="BINANCE:ETHUSDT">ETHEREUM (ETH)</option>
-                </optgroup>
-            </select>
-            <select id="time-frame" style="padding:10px; background:#1a1f26; color:white; border-radius:8px;" onchange="updateChart()">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <select id="asset-pair" onchange="updateChart()"></select>
+            <select id="time-frame" onchange="updateChart()">
                 <option value="1">1 MIN</option>
                 <option value="5">5 MIN</option>
                 <option value="15">15 MIN</option>
-                <option value="30">30 MIN</option>
-                <option value="60">1 HOUR</option>
             </select>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <select id="mode-select" style="width:100%; padding:10px; background:#1a1f26; color:white; border-radius:8px;" onchange="checkMode()">
-                <option value="free">FREE MODE</option>
-                <option value="vip">VIP MODE (PAID)</option>
-            </select>
-        </div>
+        <select id="mode-select" onchange="checkMode()">
+            <option value="free">FREE MODE</option>
+            <option value="vip">VIP PRO (98%)</option>
+        </select>
 
-        <button class="analyze-btn" onclick="generateSignal()">GET SIGNAL</button>
+        <button class="analyze-btn" id="main-action-btn" onclick="generateSignal()">GET SIGNAL</button>
 
-        <div id="result-display" style="margin-top:15px; min-height:100px; background:rgba(255,255,255,0.03); border-radius:15px; display:flex; justify-content:center; align-items:center;">
+        <div id="result-display" style="margin-top:15px; min-height:100px; background:rgba(255,255,255,0.03); border-radius:15px; display:flex; justify-content:center; align-items:center; border: 1px dashed #444;">
             <div id="status-msg">READY</div>
             <div id="signal-box" style="display:none; text-align:center;">
                 <div id="dir-text" style="font-size: 32px; font-weight: bold;"></div>
@@ -129,36 +88,100 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
         let isVipActive = false;
-        function initChart(s, i) { new TradingView.widget({"autosize":true,"symbol":s,"interval":i,"theme":"dark","container_id":"tv_chart","hide_top_toolbar":true}); }
-        initChart("FX:EURUSD", "1");
+        let currentExchange = 'quotex';
+
+        const pairs = {
+            quotex: [
+                { val: "FX:EURUSD", txt: "EUR/USD" },
+                { val: "FX:GBPUSD", txt: "GBP/USD" }
+            ],
+            bitunix: [
+                { val: "BITUNIX:BTCUSDT.P", txt: "BTC/USDT PERP" },
+                { val: "BITUNIX:ETHUSDT.P", txt: "ETH/USDT PERP" },
+                { val: "BITUNIX:SOLUSDT.P", txt: "SOL/USDT PERP" }
+            ]
+        };
+
+        function initChart(s, i) {
+            // Advanced Library for Live Feel
+            new TradingView.widget({
+                "width": "100%",
+                "height": "100%",
+                "symbol": s,
+                "interval": i,
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "container_id": "tv_chart"
+            });
+        }
+
+        function populatePairs() {
+            const select = document.getElementById('asset-pair');
+            select.innerHTML = "";
+            pairs[currentExchange].forEach(p => {
+                let opt = document.createElement('option');
+                opt.value = p.val; opt.innerText = p.txt;
+                select.appendChild(opt);
+            });
+            updateChart();
+        }
+
+        function switchExchange(ex) {
+            currentExchange = ex;
+            document.querySelectorAll('.switch-btn').forEach(b => b.classList.remove('active', 'btn-bitunix-active'));
+            const activeBtn = document.getElementById('btn-' + ex);
+            activeBtn.classList.add('active');
+            
+            if(ex === 'bitunix') {
+                activeBtn.classList.add('btn-bitunix-active');
+                document.getElementById('exchange-label').innerText = "BITUNIX LIVE TRADING VIEW";
+                document.getElementById('exchange-label').style.color = "var(--bitunix)";
+                document.getElementById('bot-card').classList.add('theme-bitunix');
+            } else {
+                document.getElementById('exchange-label').innerText = "QUOTEX BINARY VIEW";
+                document.getElementById('exchange-label').style.color = "var(--primary)";
+                document.getElementById('bot-card').classList.remove('theme-bitunix');
+            }
+            populatePairs();
+        }
+
         function updateChart() { initChart(document.getElementById('asset-pair').value, document.getElementById('time-frame').value); }
         function toggleVipScreen() { document.getElementById('vip-screen').style.display = (document.getElementById('vip-screen').style.display === 'flex') ? 'none' : 'flex'; }
-        function toggleShareScreen() { document.getElementById('share-screen').style.display = (document.getElementById('share-screen').style.display === 'flex') ? 'none' : 'flex'; }
         function checkMode() { if(document.getElementById('mode-select').value === 'vip' && !isVipActive) { toggleVipScreen(); document.getElementById('mode-select').value = "free"; } }
+        
         function activateVip() {
             if(document.getElementById('vip-pass').value === "FARHAN786") {
                 isVipActive = true; toggleVipScreen(); document.getElementById('mode-select').value = "vip"; alert("VIP Activated!");
             } else { alert("Wrong Key!"); }
         }
-        function copyAndShare() {
-            const msg = "🔥 FARHAN PRO BOT: 98% Accuracy! Join: https://farhanali353.github.io/Farhan-Pro-Bot/";
-            const t = document.createElement("textarea"); t.value = msg; document.body.appendChild(t); t.select(); document.execCommand("copy"); document.body.removeChild(t);
-            document.getElementById("copy-msg").style.display = "block";
-        }
+
         function generateSignal() {
             const status = document.getElementById('status-msg');
             const sigBox = document.getElementById('signal-box');
-            status.innerText = "ANALYZING..."; sigBox.style.display = "none";
+            status.innerText = "SCANNING LIVE DATA...";
+            sigBox.style.display = "none";
             setTimeout(() => {
                 status.style.display = "none";
                 const isUp = Math.random() > 0.5;
-                const mode = document.getElementById('mode-select').value;
-                document.getElementById('dir-text').innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
-                document.getElementById('dir-text').style.color = isUp ? "#00ffcc" : "#ff3366";
-                document.getElementById('acc-text').innerText = (mode === 'vip') ? "98.8% SURESHOT" : "74.5% ACCURACY";
+                const dirEl = document.getElementById('dir-text');
+                if(currentExchange === 'bitunix') {
+                    dirEl.innerText = isUp ? "OPEN LONG 🟢" : "OPEN SHORT 🔴";
+                } else {
+                    dirEl.innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
+                }
+                dirEl.style.color = isUp ? "#00ffcc" : "#ff3366";
+                document.getElementById('acc-text').innerText = (document.getElementById('mode-select').value === 'vip') ? "98.8% SURESHOT" : "74.5% ACCURACY";
                 sigBox.style.display = "block";
             }, 2000);
         }
+
+        switchExchange('quotex');
     </script>
 </body>
 </html>
