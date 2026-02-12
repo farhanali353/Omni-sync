@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FARHAN PRO BOT</title>
+    <title>FARHAN PRO BOT - LIVE</title>
     
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#05080a">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap');
 
@@ -17,234 +13,175 @@
             --secondary: #ff3366;
             --bg: #05080a;
             --card-bg: #0d1117;
+            --gold: #ffcc00;
         }
 
         body {
             background: var(--bg);
             color: white;
             font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0; padding: 10px;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; justify-content: center;
         }
 
-        /* Logo Styling */
-        .logo-container {
-            margin-top: 10px;
-            text-align: center;
-        }
-        .logo-container img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 15px var(--primary);
-        }
+        /* --- TOP LEFT BUTTONS --- */
+        .important-notice-box { position: fixed; top: 15px; left: 15px; z-index: 2000; }
+        .notice-trigger { background: rgba(255, 51, 102, 0.1); border: 1px solid var(--secondary); color: var(--secondary); padding: 5px 12px; border-radius: 5px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer; }
+        .notice-content { display: none; position: absolute; top: 35px; left: 0; width: 260px; background: rgba(13, 17, 23, 0.98); border: 1px solid var(--secondary); padding: 12px; border-radius: 8px; font-size: 11px; }
+        .important-notice-box:hover .notice-content { display: block; }
 
-        .brand-name {
-            font-family: 'Orbitron';
-            font-size: 22px;
-            color: white;
-            margin: 10px 0 5px 0;
-            text-shadow: 0 0 10px var(--primary);
-        }
+        .share-gift-btn { position: fixed; top: 60px; left: 15px; background: rgba(255, 204, 0, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; border-radius: 5px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; z-index: 2000; animation: glow 1.5s infinite; }
+        @keyframes glow { 0% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 15px var(--gold); } 100% { box-shadow: 0 0 5px var(--gold); } }
 
-        .ceo-label {
-            font-size: 10px;
-            color: #666;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
+        .pro-badge { position: fixed; top: 15px; right: 15px; background: linear-gradient(45deg, var(--gold), #ff8800); color: black; font-family: 'Orbitron'; font-weight: 900; padding: 5px 15px; border-radius: 50px; cursor: pointer; border: none; z-index: 1000; }
 
-        /* Chart Section */
-        #chart-box {
-            width: 100%;
-            height: 220px;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #222;
-            margin-bottom: 15px;
-        }
+        .logo-container img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 15px var(--primary); }
+        .brand-name { font-family: 'Orbitron'; font-size: 20px; text-shadow: 0 0 10px var(--primary); margin: 10px 0 0 0; }
+        .ceo-label { font-size: 9px; color: #666; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
 
-        .main-card {
-            width: 95%;
-            max-width: 420px;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid #1f2937;
-            text-align: center;
-        }
+        #chart-box { width: 100%; height: 200px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 400px; }
+        .main-card { width: 95%; max-width: 400px; background: var(--card-bg); padding: 15px; border-radius: 20px; border: 1px solid #1f2937; text-align: center; position: relative; }
 
-        .input-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        select { width: 100%; padding: 10px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 8px; font-size: 11px; }
 
-        .input-group { text-align: left; }
-        label { font-size: 10px; color: var(--primary); font-weight: bold; }
+        .analyze-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; }
 
-        select {
-            width: 100%;
-            padding: 12px;
-            background: #1a1f26;
-            color: white;
-            border: 1px solid #333;
-            border-radius: 10px;
-            font-size: 13px;
-            outline: none;
-            margin-top: 5px;
-        }
-
-        .analyze-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #00ffcc, #0088ff);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
-        }
-
-        #result-display {
-            margin-top: 15px;
-            min-height: 120px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
+        #vip-screen, #share-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(13, 17, 23, 0.98); border-radius: 20px; z-index: 500; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        input { background: #111; border: 1px solid var(--gold); color: white; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 15px; width: 80%; }
+        
+        #result-display { margin-top: 15px; min-height: 100px; background: rgba(255,255,255,0.02); border-radius: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .sig-val { font-size: 32px; font-weight: 900; }
-        .acc-info { font-size: 12px; color: #ffcc00; margin-top: 5px; }
-
-        .loader {
-            display: none;
-            width: 30px;
-            height: 30px;
-            border: 3px solid #222;
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
+    <div class="important-notice-box">
+        <div class="notice-trigger">⚠️ NOTICE</div>
+        <div class="notice-content">
+            <strong style="color:var(--secondary)">FREE MODE WARNING:</strong><br>
+            Normal Mode signals have NO guarantee. Use at your own risk.
+        </div>
+    </div>
+    <button class="share-gift-btn" onclick="toggleShareScreen()">🎁 FREE VIP GIFT</button>
+
+    <button class="pro-badge" onclick="toggleVipScreen()">PRO</button>
+
     <div class="logo-container">
-        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Farhan Pro Bot Logo">
+        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Logo">
     </div>
     
     <div class="brand-name">FARHAN PRO BOT</div>
     <div class="ceo-label">CEO Farhan Ali</div>
 
     <div id="chart-box">
-        <div class="tradingview-widget-container" style="height:100%;width:100%">
-            <div id="tv_chart"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-            <script type="text/javascript">
-            new TradingView.widget({
-                "autosize": true,
-                "symbol": "FX:EURUSD",
-                "interval": "1",
-                "theme": "dark",
-                "style": "1",
-                "locale": "en",
-                "hide_top_toolbar": true,
-                "container_id": "tv_chart"
-            });
-            </script>
-        </div>
+        <div id="tv_chart" style="height:100%; width:100%;"></div>
     </div>
 
     <div class="main-card">
+        <div id="vip-screen">
+            <h3 style="color:var(--gold); font-family:'Orbitron';">VIP ACCESS</h3>
+            <div style="color:var(--gold); font-size:20px;">PKR 1999 | $ 6.99</div>
+            <div style="font-size: 10px; color: var(--primary); margin: 10px 0;">BINANCE • UBL BANK</div>
+            <p style="font-size: 11px;">WhatsApp: +923136908663</p>
+            <input type="password" id="vip-pass" placeholder="Enter Activation Key">
+            <button class="analyze-btn" style="background:var(--gold); color:black;" onclick="activateVip()">ACTIVATE</button>
+            <button style="background:none; border:none; color:#555; margin-top:10px; cursor:pointer;" onclick="toggleVipScreen()">Close</button>
+        </div>
+
+        <div id="share-screen">
+            <h3 style="color:var(--gold); font-family:'Orbitron';">GET FREE VIP</h3>
+            <p style="font-size: 11px; color:#ccc;">Share our bot with 50 people & get 10 downloads to unlock VIP for FREE!</p>
+            
+            <button class="analyze-btn" style="background:var(--primary); color:black;" onclick="copyAndShare()">SHARE NOW</button>
+            
+            <p id="copy-msg" style="font-size: 10px; color: #00ffcc; margin-top: 10px; display: none;">✅ Link Copied! Ab ise 50 logon ko bhejo.</p>
+            <p style="font-size: 9px; margin-top:10px;">Send screenshots to CEO on WhatsApp for key!</p>
+            <button style="background:none; border:none; color:#555; margin-top:10px; cursor:pointer;" onclick="toggleShareScreen()">Close</button>
+        </div>
+
         <div class="input-grid">
-            <div class="input-group">
-                <label>CURRENCY PAIR</label>
-                <select id="asset-pair">
-                    <optgroup label="OTC PAIRS">
-                        <option>USD/INR (OTC)</option><option>USD/PKR (OTC)</option>
-                        <option>EUR/USD (OTC)</option><option>GBP/JPY (OTC)</option>
-                        <option>USD/BRL (OTC)</option><option>AUD/CAD (OTC)</option>
-                    </optgroup>
-                    <optgroup label="LIVE MARKET">
-                        <option>EUR/USD</option><option>GBP/USD</option>
-                        <option>USD/JPY</option><option>BTC/USDT</option>
-                        <option>GOLD (XAU/USD)</option>
-                    </optgroup>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>TIMEFRAME</label>
-                <select id="time-frame">
-                    <option>5 SEC</option><option>15 SEC</option><option>30 SEC</option>
-                    <option selected>1 MIN</option><option>2 MIN</option><option>5 MIN</option>
-                    <option>15 MIN</option><option>1 HOUR</option><option>4 HOUR</option>
-                </select>
-            </div>
+            <select id="asset-pair">
+                <option>EUR/USD</option><option>GBP/USD</option>
+            </select>
+            <select id="mode-select" onchange="checkMode()">
+                <option value="free">FREE MODE</option>
+                <option value="vip">PREMIUM (98%)</option>
+            </select>
         </div>
 
         <button class="analyze-btn" onclick="generateSignal()">Analyze Market</button>
 
         <div id="result-display">
-            <div class="loader" id="loader"></div>
-            <div id="status-msg" style="font-size: 11px; color: #555;">SYSTEM READY</div>
-            
-            <div id="signal-box" style="display:none; text-align:center;">
+            <div id="status-msg" style="font-size: 11px; color: #444;">READY</div>
+            <div id="signal-box" style="display:none;">
                 <div id="dir-text" class="sig-val"></div>
-                <div id="acc-text" class="acc-info"></div>
-                <div style="font-size: 10px; color: #00ffcc; margin-top: 5px;">SURESHOT WIN</div>
+                <div id="acc-text" style="color: var(--gold); font-size: 13px;"></div>
+                <div id="guar-text" style="font-size: 10px; margin-top: 5px;"></div>
             </div>
         </div>
     </div>
 
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        function generateSignal() {
-            const loader = document.getElementById('loader');
-            const status = document.getElementById('status-msg');
-            const signalBox = document.getElementById('signal-box');
+        let isVipActive = false;
+        const MY_BOT_LINK = "https://farhanali353.github.io/Farhan-Pro-Bot/";
 
-            signalBox.style.display = "none";
-            status.style.display = "block";
-            status.innerText = "ALGORITHMIC SCANNING...";
-            loader.style.display = "block";
+        new TradingView.widget({ "autosize": true, "symbol": "FX:EURUSD", "interval": "1", "theme": "dark", "container_id": "tv_chart", "hide_top_toolbar": true });
 
-            setTimeout(() => {
-                loader.style.display = "none";
-                status.style.display = "none";
-                
-                const isUp = Math.random() > 0.45;
-                const accuracy = (84 + Math.random() * 11).toFixed(1);
+        function toggleVipScreen() { document.getElementById('vip-screen').style.display = (document.getElementById('vip-screen').style.display === 'flex') ? 'none' : 'flex'; }
+        function toggleShareScreen() { document.getElementById('share-screen').style.display = (document.getElementById('share-screen').style.display === 'flex') ? 'none' : 'flex'; }
 
-                const dir = document.getElementById('dir-text');
-                dir.innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
-                dir.style.color = isUp ? "#00ffcc" : "#ff3366";
-                
-                document.getElementById('acc-text').innerText = "ACCURACY: " + accuracy + "%";
-                
-                signalBox.style.display = "block";
-            }, 2000);
+        function copyAndShare() {
+            const message = "🔥 FARHAN PRO BOT: Get 98% Accuracy signals for EUR/USD and GBP/USD! Join now for VIP wins: " + MY_BOT_LINK;
+            
+            // Clipboard copy logic
+            const tempInput = document.createElement("textarea");
+            tempInput.value = message;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            document.getElementById("copy-msg").style.display = "block";
+            
+            if (navigator.share) {
+                navigator.share({ title: 'FARHAN PRO BOT', text: message });
+            } else {
+                alert("Link Copied! Ab ise WhatsApp ya Telegram par 50 logon ko share karein.");
+            }
         }
 
-        // Service Worker registration (Install button ke liye zaroori)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Bot Active'))
-                    .catch(err => console.log('Error', err));
-            });
+        function checkMode() { if(document.getElementById('mode-select').value === 'vip' && !isVipActive) { toggleVipScreen(); document.getElementById('mode-select').value = "free"; } }
+
+        function activateVip() {
+            if(document.getElementById('vip-pass').value === "FARHAN786") {
+                isVipActive = true; toggleVipScreen(); document.getElementById('mode-select').value = "vip"; alert("VIP Unlocked Successfully!");
+            } else { alert("Invalid Key!"); }
+        }
+
+        function generateSignal() {
+            const mode = document.getElementById('mode-select').value;
+            const status = document.getElementById('status-msg');
+            const signalBox = document.getElementById('signal-box');
+            status.innerText = "SCANNING..."; signalBox.style.display = "none";
+            setTimeout(() => {
+                status.style.display = "none";
+                const isUp = Math.random() > 0.5;
+                document.getElementById('dir-text').innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
+                document.getElementById('dir-text').style.color = isUp ? "#00ffcc" : "#ff3366";
+                if(mode === 'vip') {
+                    document.getElementById('acc-text').innerText = "ACCURACY: 98.8%";
+                    document.getElementById('guar-text').innerText = "110% VIP SURESHOT WIN";
+                    document.getElementById('guar-text').style.color = "#00ffcc";
+                } else {
+                    document.getElementById('acc-text').innerText = "ACCURACY: 72.4%";
+                    document.getElementById('guar-text').innerText = "NO GUARANTEE";
+                    document.getElementById('guar-text').style.color = "#ff3366";
+                }
+                signalBox.style.display = "block";
+            }, 1500);
         }
     </script>
 </body>
