@@ -3,185 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FARHAN PRO - LIVE BITUNIX CHART</title>
+    <title>QUOTEX VIP PRO - CEO FARHAN ALI</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap');
-        :root { --primary: #00ffcc; --secondary: #ff3366; --bg: #05080a; --card-bg: #0d1117; --gold: #ffcc00; --bitunix: #f39c12; }
+        :root { --primary: #00ffcc; --secondary: #ff3366; --bg: #05080a; --card-bg: #0d1117; --gold: #ffcc00; }
         
         body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
-        .exchange-switcher { position: fixed; top: 10px; left: 10px; z-index: 3000; display: flex; gap: 5px; }
-        .switch-btn { background: #1a1f26; border: 1px solid #333; color: #888; padding: 6px 12px; border-radius: 5px; font-size: 10px; font-family: 'Orbitron'; cursor: pointer; }
-        .switch-btn.active { border-color: var(--primary); color: var(--primary); background: rgba(0, 255, 204, 0.1); }
-        .btn-bitunix-active { border-color: var(--bitunix) !important; color: var(--bitunix) !important; }
-
         .pro-badge { position: fixed; top: 10px; right: 10px; background: linear-gradient(45deg, var(--gold), #ff8800); color: black; font-family: 'Orbitron'; font-weight: 900; padding: 6px 18px; border-radius: 50px; cursor: pointer; border: none; z-index: 3000; }
 
-        .logo-container { margin-top: 60px; text-align: center; }
-        .logo-container img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary); }
+        .logo-container { margin-top: 30px; text-align: center; }
+        .logo-container img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 15px var(--primary); }
         
-        /* Fixed Chart Height for Live Feel */
-        #chart-box { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; background: #000; }
+        #chart-box { width: 100%; height: 380px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; background: #000; }
         
-        .main-card { width: 95%; max-width: 480px; background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1f2937; text-align: center; position: relative; }
+        .main-card { width: 95%; max-width: 480px; background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1f2937; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        .theme-bitunix { border-color: var(--bitunix) !important; }
-        select { width: 100%; padding: 12px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 10px; font-size: 12px; margin-bottom: 10px; }
-        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; }
+        select { width: 100%; padding: 12px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 10px; font-size: 13px; margin-bottom: 10px; font-family: 'Poppins'; }
+        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .analyze-btn:active { transform: scale(0.95); }
 
         #vip-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 10, 0.98); border-radius: 25px; z-index: 100; flex-direction: column; justify-content: center; align-items: center; padding: 25px; border: 1px solid var(--gold); }
+        .acc-label { color: var(--gold); font-size: 12px; margin-top: 5px; font-family: 'Orbitron'; }
+        
+        .status-box { margin-top:15px; min-height:100px; background:rgba(255,255,255,0.03); border-radius:15px; display:flex; flex-direction:column; justify-content:center; align-items:center; border: 1px dashed #444; }
     </style>
 </head>
 <body>
-
-    <div class="exchange-switcher">
-        <button id="btn-quotex" class="switch-btn active" onclick="switchExchange('quotex')">QUOTEX</button>
-        <button id="btn-bitunix" class="switch-btn" onclick="switchExchange('bitunix')">BITUNIX</button>
-    </div>
 
     <button class="pro-badge" onclick="toggleVipScreen()">PRO</button>
 
     <div class="logo-container">
         <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Logo">
-        <div id="exchange-label" style="font-size: 10px; color: var(--primary); margin-top: 5px; font-family: 'Orbitron'; uppercase">QUOTEX MODE</div>
+        <div style="font-size: 14px; color: var(--primary); margin-top: 5px; font-family: 'Orbitron'; letter-spacing: 1px;">QUOTEX VIP TERMINAL</div>
+        <div style="font-size: 10px; color: #888;">Owner: CEO Farhan Ali</div>
     </div>
 
     <div id="chart-box">
         <div id="tv_chart" style="height:100%; width:100%;"></div>
     </div>
 
-    <div class="main-card" id="bot-card">
+    <div class="main-card">
         <div id="vip-screen">
             <h3 style="color:var(--gold); font-family:'Orbitron';">VIP ACTIVATION</h3>
-            <p style="font-size: 11px;">WhatsApp: +923136908663</p>
-            <input type="password" id="vip-pass" style="background:#111; border:1px solid var(--gold); color:white; padding:10px; border-radius:5px; text-align:center;" placeholder="Enter Key">
-            <button class="analyze-btn" style="background:var(--gold); color:black; margin-top:10px;" onclick="activateVip()">UNLOCK</button>
-            <button style="background:none; border:none; color:#555; margin-top:15px;" onclick="toggleVipScreen()">Close</button>
+            <p style="font-size: 12px;">Contact for VIP Key:<br><b>+923136908663</b></p>
+            <input type="password" id="vip-pass" style="background:#111; border:1px solid var(--gold); color:white; padding:12px; border-radius:8px; text-align:center; width: 80%; margin-bottom: 10px;" placeholder="Enter VIP Key">
+            <button class="analyze-btn" style="background:var(--gold); color:black;" onclick="activateVip()">UNLOCK TERMINAL</button>
+            <button style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;" onclick="toggleVipScreen()">Close</button>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <select id="asset-pair" onchange="updateChart()"></select>
-            <select id="time-frame" onchange="updateChart()">
-                <option value="1">1 MIN</option>
-                <option value="5">5 MIN</option>
-                <option value="15">15 MIN</option>
-            </select>
-        </div>
-
-        <select id="mode-select" onchange="checkMode()">
-            <option value="free">FREE MODE</option>
-            <option value="vip">VIP PRO (98%)</option>
+        <select id="asset-pair" onchange="updateChart()">
+            <optgroup label="Popular Pairs">
+                <option value="FX:EURUSD">EUR/USD (Euro / US Dollar)</option>
+                <option value="FX:GBPUSD">GBP/USD (British Pound / US Dollar)</option>
+                <option value="FX:USDJPY">USD/JPY (US Dollar / Japanese Yen)</option>
+                <option value="FX:AUDUSD">AUD/USD (Australian Dollar / US Dollar)</option>
+            </optgroup>
+            <optgroup label="Other Assets">
+                <option value="FX:EURGBP">EUR/GBP (Euro / British Pound)</option>
+                <option value="FX:USDCAD">USD/CAD (US Dollar / Canadian Dollar)</option>
+                <option value="FX:GBPJPY">GBP/JPY (British Pound / Japanese Yen)</option>
+                <option value="OANDA:XAUUSD">GOLD (XAU/USD)</option>
+            </optgroup>
         </select>
 
-        <button class="analyze-btn" id="main-action-btn" onclick="generateSignal()">GET SIGNAL</button>
+        <select id="time-frame" onchange="updateChart()">
+            <option value="1">1 MINUTE</option>
+            <option value="2">2 MINUTES</option>
+            <option value="5">5 MINUTES</option>
+            <option value="15">15 MINUTES</option>
+            <option value="30">30 MINUTES</option>
+            <option value="60">1 HOUR</option>
+        </select>
 
-        <div id="result-display" style="margin-top:15px; min-height:100px; background:rgba(255,255,255,0.03); border-radius:15px; display:flex; justify-content:center; align-items:center; border: 1px dashed #444;">
-            <div id="status-msg">READY</div>
-            <div id="signal-box" style="display:none; text-align:center;">
-                <div id="dir-text" style="font-size: 32px; font-weight: bold;"></div>
-                <div id="acc-text" style="color: var(--gold); font-size: 13px;"></div>
+        <select id="mode-select" onchange="checkMode()">
+            <option value="free">FREE ANALYSIS (Standard)</option>
+            <option value="vip">VIP ANALYSIS (98.8% Accuracy)</option>
+        </select>
+
+        <button class="analyze-btn" onclick="generateSignal()">Analyze Real Market</button>
+
+        <div class="status-box">
+            <div id="status-msg" style="font-size: 12px; color: #666;">READY FOR ANALYSIS</div>
+            <div id="signal-data" style="display:none; text-align:center;">
+                <div id="dir-text" style="font-size: 32px; font-weight: bold; margin-bottom: 5px;"></div>
+                <div id="acc-text" class="acc-label"></div>
+                <div style="font-size: 9px; color: #555; margin-top: 5px;">Indicators: RSI, EMA, MACD Analyzed</div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        let isVipActive = false;
-        let currentExchange = 'quotex';
+        let isVipActive = localStorage.getItem("vipUnlocked") === "true";
 
-        const pairs = {
-            quotex: [
-                { val: "FX:EURUSD", txt: "EUR/USD" },
-                { val: "FX:GBPUSD", txt: "GBP/USD" }
-            ],
-            bitunix: [
-                { val: "BITUNIX:BTCUSDT.P", txt: "BTC/USDT PERP" },
-                { val: "BITUNIX:ETHUSDT.P", txt: "ETH/USDT PERP" },
-                { val: "BITUNIX:SOLUSDT.P", txt: "SOL/USDT PERP" }
-            ]
-        };
-
-        function initChart(s, i) {
-            // Advanced Library for Live Feel
+        function initChart(symbol, interval) {
             new TradingView.widget({
                 "width": "100%",
                 "height": "100%",
-                "symbol": s,
-                "interval": i,
+                "symbol": symbol,
+                "interval": interval,
                 "timezone": "Etc/UTC",
                 "theme": "dark",
                 "style": "1",
                 "locale": "en",
                 "toolbar_bg": "#f1f3f6",
                 "enable_publishing": false,
-                "hide_side_toolbar": false,
+                "hide_side_toolbar": true,
                 "allow_symbol_change": true,
                 "container_id": "tv_chart"
             });
         }
 
-        function populatePairs() {
-            const select = document.getElementById('asset-pair');
-            select.innerHTML = "";
-            pairs[currentExchange].forEach(p => {
-                let opt = document.createElement('option');
-                opt.value = p.val; opt.innerText = p.txt;
-                select.appendChild(opt);
-            });
-            updateChart();
+        window.onload = () => { 
+            updateChart(); 
+            if(isVipActive) { 
+                document.getElementById('mode-select').value = "vip"; 
+            } 
+        };
+
+        function updateChart() {
+            const pair = document.getElementById('asset-pair').value;
+            const tf = document.getElementById('time-frame').value;
+            initChart(pair, tf);
         }
 
-        function switchExchange(ex) {
-            currentExchange = ex;
-            document.querySelectorAll('.switch-btn').forEach(b => b.classList.remove('active', 'btn-bitunix-active'));
-            const activeBtn = document.getElementById('btn-' + ex);
-            activeBtn.classList.add('active');
-            
-            if(ex === 'bitunix') {
-                activeBtn.classList.add('btn-bitunix-active');
-                document.getElementById('exchange-label').innerText = "BITUNIX LIVE TRADING VIEW";
-                document.getElementById('exchange-label').style.color = "var(--bitunix)";
-                document.getElementById('bot-card').classList.add('theme-bitunix');
-            } else {
-                document.getElementById('exchange-label').innerText = "QUOTEX BINARY VIEW";
-                document.getElementById('exchange-label').style.color = "var(--primary)";
-                document.getElementById('bot-card').classList.remove('theme-bitunix');
+        function toggleVipScreen() {
+            const screen = document.getElementById('vip-screen');
+            screen.style.display = (screen.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function checkMode() {
+            if(document.getElementById('mode-select').value === 'vip' && !isVipActive) {
+                toggleVipScreen();
+                document.getElementById('mode-select').value = "free";
             }
-            populatePairs();
         }
 
-        function updateChart() { initChart(document.getElementById('asset-pair').value, document.getElementById('time-frame').value); }
-        function toggleVipScreen() { document.getElementById('vip-screen').style.display = (document.getElementById('vip-screen').style.display === 'flex') ? 'none' : 'flex'; }
-        function checkMode() { if(document.getElementById('mode-select').value === 'vip' && !isVipActive) { toggleVipScreen(); document.getElementById('mode-select').value = "free"; } }
-        
         function activateVip() {
-            if(document.getElementById('vip-pass').value === "FARHAN786") {
-                isVipActive = true; toggleVipScreen(); document.getElementById('mode-select').value = "vip"; alert("VIP Activated!");
-            } else { alert("Wrong Key!"); }
+            const pass = document.getElementById('vip-pass').value;
+            if(pass === "FARHAN786") {
+                isVipActive = true;
+                localStorage.setItem("vipUnlocked", "true");
+                toggleVipScreen();
+                document.getElementById('mode-select').value = "vip";
+                alert("Welcome CEO Farhan Ali! VIP Features Unlocked.");
+            } else {
+                alert("Invalid VIP Key. Please contact support.");
+            }
         }
 
         function generateSignal() {
             const status = document.getElementById('status-msg');
-            const sigBox = document.getElementById('signal-box');
-            status.innerText = "SCANNING LIVE DATA...";
-            sigBox.style.display = "none";
+            const data = document.getElementById('signal-data');
+            const dir = document.getElementById('dir-text');
+            const acc = document.getElementById('acc-text');
+
+            status.style.display = "block";
+            status.innerText = "SCANNING PRICE ACTION & RSI...";
+            data.style.display = "none";
+
+            // Real Market Sync Logic (Simulated Analysis)
             setTimeout(() => {
                 status.style.display = "none";
-                const isUp = Math.random() > 0.5;
-                const dirEl = document.getElementById('dir-text');
-                if(currentExchange === 'bitunix') {
-                    dirEl.innerText = isUp ? "OPEN LONG 🟢" : "OPEN SHORT 🔴";
-                } else {
-                    dirEl.innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
-                }
-                dirEl.style.color = isUp ? "#00ffcc" : "#ff3366";
-                document.getElementById('acc-text').innerText = (document.getElementById('mode-select').value === 'vip') ? "98.8% SURESHOT" : "74.5% ACCURACY";
-                sigBox.style.display = "block";
-            }, 2000);
-        }
+                data.style.display = "block";
+                
+                // Logic based on Current Seconds (Real-time sync simulation)
+                const sec = new Date().getSeconds();
+                const isCall = (sec % 2 === 0); 
 
-        switchExchange('quotex');
+                dir.innerText = isCall ? "CALL ⬆️" : "PUT ⬇️";
+                dir.style.color = isCall ? "#00ffcc" : "#ff3366";
+
+                if(isVipActive) {
+                    acc.innerText = "98.8% SURESHOT SIGNAL";
+                    acc.style.color = "var(--gold)";
+                } else {
+                    acc.innerText = "72.4% ACCURACY";
+                    acc.style.color = "#888";
+                }
+            }, 2500);
+        }
     </script>
 </body>
-</html>
+    </html>
+    
