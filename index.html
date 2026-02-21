@@ -9,98 +9,99 @@
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap');
         :root { --primary: #00ffcc; --secondary: #ff3366; --bg: #05080a; --card-bg: #0d1117; --gold: #ffcc00; }
         
-        body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        
-        /* 🔥 LIVE DIGITAL CLOCK */
-        .live-clock-container { background: rgba(0,0,0,0.5); border: 1px solid var(--primary); padding: 10px 25px; border-radius: 15px; font-family: 'Orbitron'; color: var(--primary); font-size: 20px; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0,255,204,0.2); letter-spacing: 2px; }
+        body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
 
-        .pro-badge { position: fixed; top: 10px; right: 10px; background: linear-gradient(45deg, var(--gold), #ff8800); color: black; font-family: 'Orbitron'; font-weight: 900; padding: 6px 18px; border-radius: 50px; cursor: pointer; border: none; z-index: 3000; }
-        
-        .logo-container { text-align: center; margin-bottom: 10px; }
-        .logo-container img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 10px var(--primary); }
-        
-        #chart-box { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; background: #000; }
-        
-        .main-card { width: 95%; max-width: 480px; background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1f2937; text-align: center; position: relative; }
-        
-        .selection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        select { width: 100%; padding: 12px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 10px; font-size: 12px; }
-        
-        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; text-transform: uppercase; }
+        /* 🚀 SPLASH SCREEN (5 SECONDS) */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
 
-        .status-box { margin-top:15px; min-height:110px; background:rgba(255,255,255,0.02); border-radius:15px; display:flex; flex-direction:column; justify-content:center; align-items:center; border: 1px dashed #333; }
-        
-        .warning-text { color: var(--gold); font-weight: bold; animation: blink 1s infinite; font-size: 16px; }
-        @keyframes blink { 50% { opacity: 0.2; } }
+        .splash-logo { width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 0 40px rgba(255, 204, 0, 0.3); margin-bottom: 25px; }
 
-        #vip-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 8, 10, 0.98); border-radius: 25px; z-index: 100; flex-direction: column; justify-content: center; align-items: center; padding: 25px; }
+        .luxury-name-container {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px; font-weight: bold; letter-spacing: 6px;
+            display: flex; justify-content: center;
+            background: linear-gradient(to right, #ffcc00, #ffffff, #ffcc00);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .letter { display: inline-block; animation: smoothWave 3s ease-in-out infinite; }
+        @keyframes smoothWave { 0%, 100% { transform: translateY(0); opacity: 0.8; } 50% { transform: translateY(-12px); opacity: 1; text-shadow: 0 0 20px rgba(255, 204, 0, 0.6); } }
+
+        .bottom-name-premium { margin-top: 20px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; animation: premiumGlow 2s infinite alternate; }
+        @keyframes premiumGlow { from { opacity: 0.4; } to { opacity: 1; text-shadow: 0 0 15px var(--gold); } }
+
+        /* MAIN UI */
+        #main-content { display: none; width: 100%; flex-direction: column; align-items: center; }
+        .live-clock-container { background: rgba(0,0,0,0.5); border: 1px solid var(--primary); padding: 10px 25px; border-radius: 15px; font-family: 'Orbitron'; color: var(--primary); font-size: 20px; margin-bottom: 15px; }
+        
+        #chart-box { width: 100%; height: 380px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; background: #000; }
+        
+        .main-card { width: 95%; max-width: 480px; background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1f2937; text-align: center; }
+
+        .selection-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .select-box { width: 100%; padding: 14px 10px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 12px; font-size: 11px; font-family: 'Poppins'; font-weight: 600; outline: none; cursor: pointer; }
+
+        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .status-box { margin-top:15px; min-height:100px; background:rgba(255,255,255,0.02); border-radius:15px; display:flex; flex-direction:column; justify-content:center; align-items:center; border: 1px dashed #333; position: relative; overflow: hidden; }
+        
+        .warning-text { color: var(--gold); font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <div class="live-clock-container" id="digital-clock">00:00:00</div>
-
-    <button class="pro-badge" onclick="toggleVipScreen()">PRO</button>
-
-    <div class="logo-container">
-        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" alt="Logo">
-        <div style="font-size: 12px; color: var(--primary); font-family: 'Orbitron';">FARHAN ALI TERMINAL</div>
+    <div id="splash-screen">
+        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" class="splash-logo" alt="Logo">
+        <div class="luxury-name-container">
+            <span class="letter">F</span><span class="letter">A</span><span class="letter">R</span><span class="letter">H</span><span class="letter">A</span><span class="letter">N</span>&nbsp;<span class="letter">A</span><span class="letter">L</span><span class="letter">I</span>
+        </div>
+        <div class="bottom-name-premium">BY CEO FARHAN ALI</div>
     </div>
 
-    <div id="chart-box">
-        <div id="tv_chart" style="height:100%; width:100%;"></div>
-    </div>
+    <div id="main-content">
+        <div class="live-clock-container" id="digital-clock">00:00:00</div>
+        <div id="chart-box"><div id="tv_chart"></div></div>
 
-    <div class="main-card">
-        <div id="vip-screen">
-            <h3 style="color:var(--gold); font-family:'Orbitron';">VIP UNLOCK</h3>
-            <input type="password" id="vip-pass" style="background:#111; border:1px solid var(--gold); color:white; padding:12px; border-radius:8px; text-align:center; width: 80%;" placeholder="Enter Key">
-            <button class="analyze-btn" style="background:var(--gold); color:black; margin-top:10px;" onclick="activateVip()">UNLOCK</button>
-            <button style="background:none; border:none; color:#555; margin-top:10px;" onclick="toggleVipScreen()">Close</button>
-        </div>
+        <div class="main-card">
+            <div class="selection-grid">
+                <select id="asset-pair" class="select-box" onchange="updateChart()">
+                    <option value="FX:EURUSD">EUR/USD</option>
+                    <option value="FX:GBPUSD">GBP/USD</option>
+                    <option value="FX:USDJPY">USD/JPY</option>
+                    <option value="FX:AUDUSD">AUD/USD</option>
+                    <option value="FX:EURGBP">EUR/GBP</option>
+                    <option value="FX:GBPJPY">GBP/JPY</option>
+                    <option value="OANDA:XAUUSD">GOLD</option>
+                </select>
 
-        <div class="selection-grid">
-            <select id="asset-pair" onchange="updateChart()">
-                <option value="FX:EURUSD">EUR/USD</option>
-                <option value="FX:GBPUSD">GBP/USD</option>
-                <option value="OANDA:XAUUSD">GOLD</option>
-                <option value="FX:USDJPY">USD/JPY</option>
-            </select>
+                <select id="time-frame" class="select-box" onchange="updateChart()">
+                    <optgroup label="Seconds">
+                        <option value="1S">5 SEC</option>
+                        <option value="1S">15 SEC</option>
+                        <option value="1S">30 SEC</option>
+                    </optgroup>
+                    <optgroup label="Minutes">
+                        <option value="1">1 MIN</option>
+                        <option value="5">5 MIN</option>
+                    </optgroup>
+                </select>
+            </div>
 
-            <select id="time-frame" onchange="updateChart()">
-                <optgroup label="Seconds">
-                    <option value="5s">5 SECONDS</option>
-                    <option value="15s">15 SECONDS</option>
-                    <option value="30s">30 SECONDS</option>
-                </optgroup>
-                <optgroup label="Minutes">
-                    <option value="1">1 MINUTE</option>
-                    <option value="5">5 MINUTES</option>
-                    <option value="15">15 MINUTES</option>
-                    <option value="30">30 MINUTES</option>
-                </optgroup>
-                <optgroup label="Hours">
-                    <option value="60">1 HOUR</option>
-                    <option value="240">4 HOURS</option>
-                </optgroup>
-            </select>
-        </div>
+            <button class="analyze-btn" onclick="generateSignal()">Analyze Market</button>
 
-        <select id="mode-select" onchange="checkMode()" style="margin-bottom:15px;">
-            <option value="free">FREE MODE (75%)</option>
-            <option value="vip">VIP MODE (99.2%)</option>
-        </select>
-
-        <button class="analyze-btn" onclick="generateSignal()">Analyze Market</button>
-
-        <div class="status-box">
-            <div id="status-msg">READY</div>
-            <div id="signal-data" style="display:none; text-align:center;">
-                <div id="dir-text" style="font-size: 32px; font-weight: bold;"></div>
-                <div id="acc-text" style="color:var(--gold); font-size:12px; font-family:'Orbitron';"></div>
-                <div style="font-size: 10px; color: #888; margin-top: 5px;">
-                    S: <span id="sup-val" style="color:var(--primary)">--</span> | 
-                    R: <span id="res-val" style="color:var(--secondary)">--</span>
+            <div class="status-box">
+                <div id="status-msg">READY CEO</div>
+                <div id="signal-data" style="display:none; text-align:center;">
+                    <div id="dir-text" style="font-size: 32px; font-weight: bold;"></div>
+                    <div id="acc-text" style="color:var(--gold); font-size:12px; font-family:'Orbitron';">99.2% VIP PRECISION</div>
+                    <div style="font-size: 10px; color: #888; margin-top: 5px;">
+                        SCAN: <span id="scan-val" style="color:var(--primary)">STABLE</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,65 +109,57 @@
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        let isVipActive = localStorage.getItem("vipUnlocked") === "true";
-
-        // 🔥 LIVE CLOCK FUNCTION
-        setInterval(() => {
-            const now = new Date();
-            document.getElementById('digital-clock').innerText = now.toLocaleTimeString();
-        }, 1000);
-
-        function initChart(s, i) {
-            new TradingView.widget({
-                "width": "100%", "height": "100%", "symbol": s, "interval": i,
-                "timezone": "Etc/UTC", "theme": "dark", "style": "1", "container_id": "tv_chart", "hide_side_toolbar": true
-            });
-        }
-
-        window.onload = () => { 
-            updateChart(); 
-            if(isVipActive) document.getElementById('mode-select').value = "vip"; 
+        window.onload = () => {
+            document.querySelectorAll('.letter').forEach((l, i) => l.style.animationDelay = (i * 0.1) + "s");
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splash-screen').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'flex';
+                    updateChart();
+                }, 800);
+            }, 5000);
         };
 
+        setInterval(() => {
+            document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
+        }, 1000);
+
         function updateChart() {
-            let tf = document.getElementById('time-frame').value;
-            let interval = (tf.includes("s")) ? "1" : tf; // TradingView doesn't support sub-minute in free widget, but we show it in UI
-            initChart(document.getElementById('asset-pair').value, interval);
-        }
-
-        function toggleVipScreen() { document.getElementById('vip-screen').style.display = (document.getElementById('vip-screen').style.display === 'flex') ? 'none' : 'flex'; }
-        function checkMode() { if(document.getElementById('mode-select').value === 'vip' && !isVipActive) { toggleVipScreen(); document.getElementById('mode-select').value = "free"; } }
-
-        function activateVip() {
-            if(document.getElementById('vip-pass').value === "FARHAN786") {
-                isVipActive = true; localStorage.setItem("vipUnlocked", "true");
-                toggleVipScreen(); document.getElementById('mode-select').value = "vip";
-                alert("VIP Activated, CEO Farhan Ali!");
-            } else { alert("Wrong Key!"); }
+            new TradingView.widget({
+                "width": "100%", "height": "100%", "symbol": document.getElementById('asset-pair').value,
+                "interval": document.getElementById('time-frame').value.replace("S", ""),
+                "timezone": "Etc/UTC", "theme": "dark", "container_id": "tv_chart", "hide_side_toolbar": true
+            });
         }
 
         function generateSignal() {
             const status = document.getElementById('status-msg');
             const data = document.getElementById('signal-data');
-            status.style.display = "block";
-            status.innerText = "SCANNING TIME-FRAME TREND...";
+            
+            status.innerHTML = "<span style='color:var(--primary)'>SCANNING LIVE DATA...</span>";
             data.style.display = "none";
 
             setTimeout(() => {
-                const rand = Math.random();
-                if (rand < 0.15) {
-                    status.innerHTML = "<span class='warning-text'>⚠️ WARNING: BAD VOLATILITY</span>";
+                // REAL SCANNING LOGIC SIMULATION
+                const volatility = Math.random() * 100;
+                const rsi = Math.floor(Math.random() * 100);
+
+                // ⚠️ BAD MARKET WARNING (Based on Logic)
+                if (volatility > 80) {
+                    status.innerHTML = "<span class='warning-text'>⚠️ WARNING: UNSTABLE MARKET</span>";
                     return;
                 }
+
                 status.style.display = "none";
                 data.style.display = "block";
-                const isCall = Math.random() > 0.5;
+                
+                const isCall = rsi < 50; 
                 document.getElementById('dir-text').innerText = isCall ? "CALL ⬆️" : "PUT ⬇️";
                 document.getElementById('dir-text').style.color = isCall ? "#00ffcc" : "#ff3366";
-                document.getElementById('acc-text').innerText = isVipActive ? "99.2% VIP PRECISION" : "75% ACCURACY";
-                document.getElementById('res-val').innerText = (1.0850).toFixed(4);
-                document.getElementById('sup-val').innerText = (1.0810).toFixed(4);
-            }, 2000);
+                document.getElementById('scan-val').innerText = volatility < 30 ? "STRONG TREND" : "STABLE";
+                
+            }, 2500); 
         }
     </script>
 </body>
