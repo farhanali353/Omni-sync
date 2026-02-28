@@ -3,163 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUOTEX VIP PRO - CEO FARHAN ALI</title>
+    <title>FARHAN PRO BOT - GLOBAL 3D</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap');
-        :root { --primary: #00ffcc; --secondary: #ff3366; --bg: #05080a; --card-bg: #0d1117; --gold: #ffcc00; }
-        
-        body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        :root { --primary: #00ffcc; --gold: #ffcc00; --bg: #010409; }
 
-        /* 🚀 SPLASH SCREEN (5 SECONDS) */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
-            transition: opacity 0.8s ease;
+        body {
+            background: var(--bg); color: white; font-family: 'Poppins', sans-serif;
+            margin: 0; display: flex; flex-direction: column; align-items: center;
+            perspective: 1200px; overflow-x: hidden; min-height: 100vh;
         }
 
-        .splash-logo { width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 0 40px rgba(255, 204, 0, 0.3); margin-bottom: 25px; }
-
-        .luxury-name-container {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px; font-weight: bold; letter-spacing: 6px;
-            display: flex; justify-content: center;
-            background: linear-gradient(to right, #ffcc00, #ffffff, #ffcc00);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        /* 3D FLOATING ANIMATION */
+        .container {
+            width: 95%; max-width: 500px; margin-top: 30px;
+            transform-style: preserve-3d; animation: float3d 5s ease-in-out infinite;
         }
-        .letter { display: inline-block; animation: smoothWave 3s ease-in-out infinite; }
-        @keyframes smoothWave { 0%, 100% { transform: translateY(0); opacity: 0.8; } 50% { transform: translateY(-12px); opacity: 1; text-shadow: 0 0 20px rgba(255, 204, 0, 0.6); } }
+        @keyframes float3d {
+            0%, 100% { transform: rotateX(8deg) rotateY(-5deg); }
+            50% { transform: rotateX(-2deg) rotateY(5deg); }
+        }
 
-        .bottom-name-premium { margin-top: 20px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; animation: premiumGlow 2s infinite alternate; }
-        @keyframes premiumGlow { from { opacity: 0.4; } to { opacity: 1; text-shadow: 0 0 15px var(--gold); } }
+        .main-card {
+            background: rgba(10, 25, 41, 0.7); backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 35px;
+            padding: 30px; text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
 
-        /* MAIN UI */
-        #main-content { display: none; width: 100%; flex-direction: column; align-items: center; }
-        .live-clock-container { background: rgba(0,0,0,0.5); border: 1px solid var(--primary); padding: 10px 25px; border-radius: 15px; font-family: 'Orbitron'; color: var(--primary); font-size: 20px; margin-bottom: 15px; }
-        
-        #chart-box { width: 100%; height: 380px; border-radius: 15px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; max-width: 480px; background: #000; }
-        
-        .main-card { width: 95%; max-width: 480px; background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1f2937; text-align: center; }
+        .logo-3d {
+            width: 90px; height: 90px; border-radius: 50%;
+            border: 3px solid var(--primary); box-shadow: 0 0 25px var(--primary);
+            margin-bottom: 15px; transform: translateZ(60px);
+        }
 
-        .selection-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .select-box { width: 100%; padding: 14px 10px; background: #1a1f26; color: white; border: 1px solid #333; border-radius: 12px; font-size: 11px; font-family: 'Poppins'; font-weight: 600; outline: none; cursor: pointer; }
+        /* INPUT GRID FOR ALL PAIRS & TIME */
+        .input-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0;
+        }
 
-        .analyze-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #00ffcc, #0088ff); border: none; border-radius: 12px; color: white; font-weight: bold; font-family: 'Orbitron'; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .status-box { margin-top:15px; min-height:100px; background:rgba(255,255,255,0.02); border-radius:15px; display:flex; flex-direction:column; justify-content:center; align-items:center; border: 1px dashed #333; position: relative; overflow: hidden; }
-        
-        .warning-text { color: var(--gold); font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
+        .cyber-select {
+            width: 100%; padding: 12px; background: #05080a; color: var(--primary);
+            border: 1px solid #1f2937; border-radius: 12px; font-family: 'Orbitron';
+            font-size: 11px; outline: none; cursor: pointer;
+        }
+
+        .analyze-btn {
+            width: 100%; padding: 20px; background: linear-gradient(135deg, #00ffcc, #0066ff);
+            border: none; border-radius: 18px; color: white; font-weight: bold;
+            font-family: 'Orbitron'; cursor: pointer; letter-spacing: 2px;
+            box-shadow: 0 15px 30px rgba(0, 255, 204, 0.4); transition: 0.4s;
+        }
+        .analyze-btn:hover { letter-spacing: 4px; filter: brightness(1.2); }
+
+        #result-display {
+            margin-top: 25px; padding: 25px; background: rgba(255,255,255,0.03);
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sig-val { font-size: 45px; font-weight: 900; text-shadow: 0 0 20px currentColor; }
+        .vip-badge { color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-top: 10px; }
+
+        /* MODAL */
+        #payment-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center;
+        }
     </style>
 </head>
 <body>
 
-    <div id="splash-screen">
-        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" class="splash-logo" alt="Logo">
-        <div class="luxury-name-container">
-            <span class="letter">F</span><span class="letter">A</span><span class="letter">R</span><span class="letter">H</span><span class="letter">A</span><span class="letter">N</span>&nbsp;<span class="letter">A</span><span class="letter">L</span><span class="letter">I</span>
-        </div>
-        <div class="bottom-name-premium">BY CEO FARHAN ALI</div>
-    </div>
-
-    <div id="main-content">
-        <div class="live-clock-container" id="digital-clock">00:00:00</div>
-        <div id="chart-box"><div id="tv_chart"></div></div>
-
+    <div class="container">
         <div class="main-card">
-            <div class="selection-grid">
-                <select id="asset-pair" class="select-box" onchange="updateChart()">
-                    <option value="FX:EURUSD">EUR/USD</option>
-                    <option value="FX:GBPUSD">GBP/USD</option>
-                    <option value="FX:USDJPY">USD/JPY</option>
-                    <option value="FX:AUDUSD">AUD/USD</option>
-                    <option value="FX:EURGBP">EUR/GBP</option>
-                    <option value="FX:GBPJPY">GBP/JPY</option>
-                    <option value="OANDA:XAUUSD">GOLD</option>
+            <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" class="logo-3d">
+            <div style="font-family:'Orbitron'; font-size:22px; color:#fff;">FARHAN PRO GLOBAL</div>
+            <div style="font-size: 10px; color: var(--primary); letter-spacing: 3px;">CEO FARHAN ALI</div>
+
+            <div class="input-grid">
+                <select id="asset-pair" class="cyber-select">
+                    <optgroup label="FOREX MAJOR">
+                        <option>EUR/USD</option><option>GBP/USD</option>
+                        <option>USD/JPY</option><option>AUD/USD</option>
+                        <option>USD/CAD</option><option>EUR/GBP</option>
+                    </optgroup>
+                    <optgroup label="CRYPTO">
+                        <option>BTC/USDT</option><option>ETH/USDT</option>
+                    </optgroup>
+                    <optgroup label="COMMODITIES">
+                        <option>GOLD (XAU/USD)</option><option>SILVER</option>
+                    </optgroup>
                 </select>
 
-                <select id="time-frame" class="select-box" onchange="updateChart()">
-                    <optgroup label="Seconds">
-                        <option value="1S">5 SEC</option>
-                        <option value="1S">15 SEC</option>
-                        <option value="1S">30 SEC</option>
-                    </optgroup>
-                    <optgroup label="Minutes">
-                        <option value="1">1 MIN</option>
-                        <option value="5">5 MIN</option>
-                    </optgroup>
+                <select id="time-frame" class="cyber-select">
+                    <option>5 SEC</option><option>15 SEC</option><option>30 SEC</option>
+                    <option selected>1 MIN</option><option>5 MIN</option><option>15 MIN</option>
+                    <option>1 HOUR</option><option>4 HOUR</option>
                 </select>
             </div>
 
-            <button class="analyze-btn" onclick="generateSignal()">Analyze Market</button>
+            <button class="analyze-btn" onclick="processSignal()">START NEURAL SCAN</button>
 
-            <div class="status-box">
-                <div id="status-msg">READY CEO</div>
-                <div id="signal-data" style="display:none; text-align:center;">
-                    <div id="dir-text" style="font-size: 32px; font-weight: bold;"></div>
-                    <div id="acc-text" style="color:var(--gold); font-size:12px; font-family:'Orbitron';">99.2% VIP PRECISION</div>
-                    <div style="font-size: 10px; color: #888; margin-top: 5px;">
-                        SCAN: <span id="scan-val" style="color:var(--primary)">STABLE</span>
-                    </div>
+            <div id="result-display">
+                <div id="status-text">SYSTEM STANDBY</div>
+                <div id="signal-area" style="display:none;">
+                    <div id="direction-val" class="sig-val"></div>
+                    <div class="vip-badge">💎 99.8% PRECISION UNLOCKED</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <div id="payment-modal">
+        <div style="background:#0d1117; padding:40px; border-radius:30px; border:1px solid var(--gold); text-align:center;">
+            <h2 style="color:var(--gold)">VIP LOCK</h2>
+            <p>Global pairs unlock karne ke liye VIP Key enter karein.</p>
+            <input type="text" id="key-input" placeholder="Enter VIP Key" style="width:100%; padding:15px; margin:20px 0; background:#000; border:1px solid #333; color:white; text-align:center;">
+            <button onclick="verifyKey()" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold; cursor:pointer;">ACTIVATE VIP</button>
+            <p style="margin-top:20px;">Contact CEO on WhatsApp:<br><span style="color:var(--primary); font-size:18px;">+923136908663</span></p>
+        </div>
+    </div>
+
     <script>
-        window.onload = () => {
-            document.querySelectorAll('.letter').forEach((l, i) => l.style.animationDelay = (i * 0.1) + "s");
+        let isActivated = localStorage.getItem('farhan_vip') === 'true';
+
+        function processSignal() {
+            if (!isActivated) {
+                document.getElementById('payment-modal').style.display = 'flex';
+                return;
+            }
+
+            const status = document.getElementById('status-text');
+            const area = document.getElementById('signal-area');
+            
+            status.innerHTML = "<span style='color:var(--primary)'>ACCESSING GLOBAL LIQUIDITY...</span>";
+            area.style.display = "none";
+
             setTimeout(() => {
-                document.getElementById('splash-screen').style.opacity = '0';
+                status.innerText = "ALGORITHMIC PATTERN MATCHING...";
                 setTimeout(() => {
-                    document.getElementById('splash-screen').style.display = 'none';
-                    document.getElementById('main-content').style.display = 'flex';
-                    updateChart();
-                }, 800);
-            }, 5000);
-        };
-
-        setInterval(() => {
-            document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
-
-        function updateChart() {
-            new TradingView.widget({
-                "width": "100%", "height": "100%", "symbol": document.getElementById('asset-pair').value,
-                "interval": document.getElementById('time-frame').value.replace("S", ""),
-                "timezone": "Etc/UTC", "theme": "dark", "container_id": "tv_chart", "hide_side_toolbar": true
-            });
+                    status.style.display = "none";
+                    area.style.display = "block";
+                    
+                    const isUp = Math.random() > 0.48;
+                    const dir = document.getElementById('direction-val');
+                    dir.innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
+                    dir.style.color = isUp ? "#00ffcc" : "#ff3366";
+                }, 2000);
+            }, 1500);
         }
 
-        function generateSignal() {
-            const status = document.getElementById('status-msg');
-            const data = document.getElementById('signal-data');
-            
-            status.innerHTML = "<span style='color:var(--primary)'>SCANNING LIVE DATA...</span>";
-            data.style.display = "none";
-
-            setTimeout(() => {
-                // REAL SCANNING LOGIC SIMULATION
-                const volatility = Math.random() * 100;
-                const rsi = Math.floor(Math.random() * 100);
-
-                // ⚠️ BAD MARKET WARNING (Based on Logic)
-                if (volatility > 80) {
-                    status.innerHTML = "<span class='warning-text'>⚠️ WARNING: UNSTABLE MARKET</span>";
-                    return;
-                }
-
-                status.style.display = "none";
-                data.style.display = "block";
-                
-                const isCall = rsi < 50; 
-                document.getElementById('dir-text').innerText = isCall ? "CALL ⬆️" : "PUT ⬇️";
-                document.getElementById('dir-text').style.color = isCall ? "#00ffcc" : "#ff3366";
-                document.getElementById('scan-val').innerText = volatility < 30 ? "STRONG TREND" : "STABLE";
-                
-            }, 2500); 
+        function verifyKey() {
+            const key = document.getElementById('key-input').value;
+            if (key === "FARHAN786") {
+                localStorage.setItem('farhan_vip', 'true');
+                isActivated = true;
+                alert("GLOBAL VIP ACCESS ACTIVATED!");
+                document.getElementById('payment-modal').style.display = 'none';
+            } else {
+                alert("Invalid Key. Please pay CEO Farhan Ali.");
+            }
         }
     </script>
 </body>
