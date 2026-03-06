@@ -1,8 +1,8 @@
-const CACHE_NAME = 'farhan-pro-bot-v1';
+const CACHE_NAME = 'farhan-pro-bot-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  './',
+  './index.html',
+  './manifest.json',
   'https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg'
 ];
 
