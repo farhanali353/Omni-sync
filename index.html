@@ -1,195 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FARHAN 8D GLOBAL - PRO</title>
-    <link rel="manifest" href="./manifest.json">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@300;600&display=swap');
-        
-        :root { --neon-blue: #00f3ff; --neon-pink: #ff0055; --gold: #ffcc00; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FARHAN 8D BOT - PRO</title>
 
-        body {
-            background-image: url('https://i.ibb.co/0RCgRd7S/i-Stock-1218501876.jpg');
-            background-size: cover; background-position: center;
-            background-attachment: fixed;
-            color: #fff; font-family: 'Poppins', sans-serif;
-            margin: 0; min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            overflow-y: auto;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@300;600&display=swap');
 
-        .terminal-8d {
-            width: 90%; max-width: 380px; padding: 25px; border-radius: 35px;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 243, 255, 0.3); text-align: center;
-            margin: 80px 0;
-        }
+:root{
+--neon-blue:#00f3ff;
+--neon-pink:#ff0055;
+--gold:#ffcc00;
+}
 
-        .header-ui {
-            position: fixed; top: 15px; left: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 15px; box-sizing: border-box; z-index: 1000;
-        }
+body{
+background-image:url('https://i.ibb.co/0RCgRd7S/i-Stock-1218501876.jpg');
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+color:white;
+font-family:Poppins;
+margin:0;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 
-        #top-status {
-            padding: 8px 15px; border-radius: 12px; font-family: 'Orbitron';
-            font-size: 9px; font-weight: bold; min-width: 160px; text-align: center;
-        }
-        .status-warning { background: rgba(255, 0, 0, 0.7); border: 1px solid #ff0000; color: #fff; }
-        .status-pro { background: rgba(255, 204, 0, 0.2); border: 1px solid var(--gold); color: var(--gold); }
+.terminal-8d{
+width:90%;
+max-width:380px;
+padding:25px;
+border-radius:30px;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(20px);
+border:1px solid rgba(0,243,255,0.3);
+text-align:center;
+margin:80px 0;
+}
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 2000; flex-direction: column; align-items: center; overflow-y: auto; padding: 20px 0; }
-        
-        .pricing-card { 
-            background: #0a0a0a; border: 2px solid var(--gold); border-radius: 20px; 
-            padding: 20px; width: 85%; max-width: 320px; margin: 15px 0; text-align: center;
-        }
-        
-        .bank-info { font-family: 'Orbitron'; font-size: 11px; color: var(--gold); margin-bottom: 5px; display: block; }
-        .ubl-acc { font-size: 16px; font-weight: 900; color: #fff; margin-bottom: 15px; display: block; }
-        
-        .key-input { width: 90%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; text-align: center; font-family: 'Orbitron'; }
-        .activate-btn { background: #fff; color: #000; padding: 10px; border: none; border-radius: 8px; font-weight: 900; width: 95%; cursor: pointer; font-family: 'Orbitron'; margin-bottom: 10px; }
-        .wa-btn { background: #25D366; color: #fff; padding: 10px; border: none; border-radius: 8px; font-weight: 900; width: 95%; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; }
+.header-ui{
+position:fixed;
+top:15px;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+padding:0 15px;
+box-sizing:border-box;
+}
 
-        .selection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; }
-        .cyber-select { padding: 12px; background: #000; color: var(--neon-blue); border: 1px solid var(--neon-blue); border-radius: 10px; font-family: 'Orbitron'; font-size: 9px; width: 100%; }
-        .btn-8d { width: 100%; padding: 18px; background: transparent; border: 2px solid var(--neon-blue); color: var(--neon-blue); font-family: 'Orbitron'; font-weight: 900; border-radius: 15px; cursor: pointer; }
-    </style>
+#top-status{
+padding:8px 15px;
+border-radius:10px;
+font-family:Orbitron;
+font-size:10px;
+font-weight:bold;
+}
+
+.status-warning{
+background:red;
+}
+
+.status-pro{
+background:rgba(255,204,0,0.2);
+border:1px solid var(--gold);
+color:var(--gold);
+}
+
+.selection-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin:15px 0;
+}
+
+.cyber-select{
+padding:10px;
+background:black;
+color:var(--neon-blue);
+border:1px solid var(--neon-blue);
+border-radius:8px;
+font-family:Orbitron;
+font-size:10px;
+}
+
+.btn-8d{
+width:100%;
+padding:18px;
+background:transparent;
+border:2px solid var(--neon-blue);
+color:var(--neon-blue);
+font-family:Orbitron;
+font-weight:900;
+border-radius:12px;
+cursor:pointer;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+z-index:2000;
+flex-direction:column;
+align-items:center;
+overflow:auto;
+padding:20px;
+}
+
+.pricing-card{
+background:#0a0a0a;
+border:2px solid var(--gold);
+border-radius:20px;
+padding:20px;
+width:85%;
+max-width:320px;
+margin:15px 0;
+text-align:center;
+}
+
+.key-input{
+width:90%;
+padding:10px;
+margin:10px 0;
+background:#111;
+border:1px solid #333;
+color:white;
+border-radius:8px;
+text-align:center;
+font-family:Orbitron;
+}
+
+.activate-btn{
+background:white;
+color:black;
+padding:10px;
+border:none;
+border-radius:8px;
+font-weight:900;
+width:95%;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+.wa-btn{
+background:#25D366;
+color:white;
+padding:10px;
+border:none;
+border-radius:8px;
+font-weight:900;
+width:95%;
+cursor:pointer;
+font-size:11px;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="header-ui">
-        <div id="top-status" class="status-warning">⚠️ BASIC MODE (30%)</div>
-        <div onclick="showPricing()" style="cursor:pointer; background:var(--gold); color:#000; padding:10px 20px; border-radius:12px; font-family:'Orbitron'; font-weight:900; font-size:12px;">PRO</div>
-    </div>
+<div class="header-ui">
+<div id="top-status" class="status-warning">⚠️ BASIC MODE</div>
+<div onclick="showPricing()" style="cursor:pointer;background:var(--gold);color:black;padding:10px 20px;border-radius:10px;font-family:Orbitron;font-weight:900;">PRO</div>
+</div>
 
-    <div class="terminal-8d">
-        <img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" style="width:85px; border-radius:50%; border:2px solid var(--neon-blue); margin-bottom:10px;">
-        <h2 style="font-family:'Orbitron'; font-size:18px; margin:0;">FARHAN GLOBAL 8D</h2>
-        <p style="font-size:8px; color:var(--neon-blue); letter-spacing:4px; margin-bottom:20px;">CEO FARHAN ALI</p>
+<div class="terminal-8d">
 
-        <div class="selection-grid">
-            <select id="asset-pair" class="cyber-select">
-                <optgroup label="LIVE MARKETS">
-                    <option>EUR/USD (Live)</option><option>GBP/USD (Live)</option>
-                    <option>XAU/USD (Gold)</option><option>USD/JPY (Live)</option>
-                </optgroup>
-                <optgroup label="OTC MARKETS">
-                    <option>EUR/USD (OTC)</option><option>GBP/USD (OTC)</option>
-                    <option>USD/JPY (OTC)</option><option>AUD/CAD (OTC)</option>
-                </optgroup>
-            </select>
-            <select id="time-frame" class="cyber-select">
-                <option>5 SEC</option><option>15 SEC</option><option>30 SEC</option>
-                <option selected>1 MIN</option><option>5 MIN</option><option>15 MIN</option>
-            </select>
-        </div>
+<img src="https://i.ibb.co/GfGypBGD/intelligent-robot-500x500.jpg" style="width:85px;border-radius:50%;border:2px solid var(--neon-blue);margin-bottom:10px;">
 
-        <button class="btn-8d" onclick="run8DScan()">START NEURAL SCAN</button>
+<h2 style="font-family:Orbitron;margin:0;">FARHAN GLOBAL 8D</h2>
+<p style="font-size:9px;color:var(--neon-blue);letter-spacing:3px;">CEO FARHAN ALI</p>
 
-        <div id="display-8d" style="min-height:110px; margin-top:20px; background:rgba(0,0,0,0.8); border-radius:20px; display:flex; flex-direction:column; justify-content:center; border:1px solid rgba(0,243,255,0.1);">
-            <div id="status-8d" style="font-size: 10px; color: #777;">SYSTEM READY</div>
-            <div id="signal-out" style="display:none;">
-                <div id="dir-val" style="font-size: 35px; font-weight: 900;"></div>
-                <div id="acc-label" style="color:var(--gold); font-size:10px; font-family:'Orbitron';"></div>
-            </div>
-        </div>
-    </div>
+<div class="selection-grid">
+<select class="cyber-select">
+<optgroup label="LIVE MARKETS">
+<option>EUR/USD</option>
+<option>GBP/USD</option>
+<option>USD/JPY</option>
+<option>AUD/USD</option>
+<option>USD/CAD</option>
+<option>NZD/USD</option>
+<option>EUR/GBP</option>
+<option>EUR/JPY</option>
+<option>GBP/JPY</option>
+<option>USD/CHF</option>
+<option>XAU/USD (GOLD)</option>
+</optgroup>
+<optgroup label="OTC MARKETS">
+<option>EUR/USD (OTC)</option>
+<option>GBP/USD (OTC)</option>
+<option>USD/JPY (OTC)</option>
+<option>AUD/USD (OTC)</option>
+<option>USD/CAD (OTC)</option>
+<option>NZD/USD (OTC)</option>
+<option>EUR/GBP (OTC)</option>
+<option>EUR/JPY (OTC)</option>
+<option>GBP/JPY (OTC)</option>
+<option>USD/CHF (OTC)</option>
+</optgroup>
+</select>
 
-    <div id="pricing-modal" class="modal">
-        <h2 style="color:var(--gold); font-family:'Orbitron'; margin-top:20px;">SUBSCRIPTION PLANS</h2>
-        
-        <div class="pricing-card">
-            <span class="bank-info">UNITED BANK LIMITED (UBL)</span>
-            <span class="ubl-acc">0391320282803</span>
-            <h3 style="margin:0; color:var(--gold);">VIP DEEP SCAN ($30)</h3>
-            <p style="font-size:10px; color:#888;">98.9% Accuracy | S/R Analysis</p>
-            <input type="text" class="key-input" id="key-30" placeholder="ENTER VIP KEY">
-            <button class="activate-btn" onclick="unlock('key-30', 'VIP30')">ACTIVATE VIP</button>
-            <button class="wa-btn" onclick="contactWA('VIP $30')">SEND SCREENSHOT TO CEO</button>
-        </div>
+<select class="cyber-select">
+<option>5 SEC</option>
+<option>10 SEC</option>
+<option>15 SEC</option>
+<option>30 SEC</option>
+<option>45 SEC</option>
+<option>1 MIN</option>
+<option>2 MIN</option>
+<option>3 MIN</option>
+<option>5 MIN</option>
+<option>10 MIN</option>
+<option>15 MIN</option>
+</select>
+</div>
 
-        <div class="pricing-card" style="border-color: var(--neon-blue);">
-            <span class="bank-info" style="color:var(--neon-blue);">UNITED BANK LIMITED (UBL)</span>
-            <span class="ubl-acc">0391320282803</span>
-            <h3 style="margin:0; color:var(--neon-blue);">NORMAL SCAN ($20)</h3>
-            <p style="font-size:10px; color:#888;">70% Accuracy | Standard Scan</p>
-            <input type="text" class="key-input" id="key-20" placeholder="ENTER ADV KEY">
-            <button class="activate-btn" style="background:var(--neon-blue);" onclick="unlock('key-20', 'ADV20')">ACTIVATE ADVANCED</button>
-            <button class="wa-btn" onclick="contactWA('ADV $20')">SEND SCREENSHOT TO CEO</button>
-        </div>
+<button class="btn-8d" onclick="runScan()">START NEURAL SCAN</button>
+<div id="display" style="margin-top:20px;font-size:35px;font-weight:bold;"></div>
 
-        <p onclick="closePricing()" style="cursor:pointer; color:#fff; margin:20px 0; font-family:'Orbitron';">[ CLOSE ]</p>
-    </div>
-
+<!-- TradingView Live Chart -->
+<div style="margin-top:20px; width: 100%; max-width: 380px;">
+  <div class="tradingview-widget-container">
+    <div id="tradingview_chart" style="height:300px;"></div>
+    <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        let userLevel = localStorage.getItem('farhan_level') || 'free';
-        window.onload = updateUI;
-
-        function updateUI() {
-            const statusBox = document.getElementById('top-status');
-            if(userLevel === 'vip') {
-                statusBox.className = "status-pro";
-                statusBox.innerText = "⭐ VIP ACTIVE (98.9%)";
-            } else if(userLevel === 'advanced') {
-                statusBox.className = "status-pro";
-                statusBox.style.color = "var(--neon-blue)";
-                statusBox.innerText = "⚡ ADVANCED (70%)";
-            } else {
-                statusBox.className = "status-warning";
-                statusBox.innerText = "⚠️ BASIC MODE (30%)";
-            }
-        }
-
-        function showPricing() { document.getElementById('pricing-modal').style.display = 'flex'; }
-        function closePricing() { document.getElementById('pricing-modal').style.display = 'none'; }
-        
-        function contactWA(plan) {
-            window.location.href = `https://wa.me/923136908663?text=Farhan%20Bhai,%20Maine%20${plan}%20ki%20payment%20kar%20di%20hai.`;
-        }
-
-        function unlock(inputId, correctKey) {
-            const val = document.getElementById(inputId).value;
-            if(val === correctKey) {
-                localStorage.setItem('farhan_level', correctKey === 'VIP30' ? 'vip' : 'advanced');
-                alert("SUCCESS! BOT UNLOCKED.");
-                location.reload();
-            } else { alert("Invalid Key!"); }
-        }
-
-        function run8DScan() {
-            const status = document.getElementById('status-8d');
-            const out = document.getElementById('signal-out');
-            status.style.display = "block"; out.style.display = "none";
-            
-            if(userLevel === 'vip') {
-                status.innerHTML = "ANALYZING S/R LEVELS...";
-                setTimeout(() => { status.innerHTML = "DEEP NEURAL SCANNING..."; }, 2000);
-                setTimeout(() => { displaySignal(0.989, "98.9% VIP ACCURACY"); }, 5000);
-            } else if(userLevel === 'advanced') {
-                status.innerHTML = "NORMAL SCANNING...";
-                setTimeout(() => { displaySignal(0.70, "70% NORMAL ACCURACY"); }, 3000);
-            } else {
-                status.innerHTML = "RANDOM SCAN...";
-                setTimeout(() => { displaySignal(0.30, "30% BASIC (RANDOM)"); }, 1500);
-            }
-        }
-
-        function displaySignal(acc, label) {
-            const status = document.getElementById('status-8d');
-            const out = document.getElementById('signal-out');
-            status.style.display = "none"; out.style.display = "block";
-            const isUp = Math.random() < acc;
-            const dir = document.getElementById('dir-val');
-            dir.innerText = isUp ? "CALL ⬆️" : "PUT ⬇️";
-            dir.style.color = isUp ? "#00ffcc" : "#ff0055";
-            document.getElementById('acc-label').innerText = label;
-        }
+      new TradingView.widget({
+        "width": "100%",
+        "height": 300,
+        "symbol": "FX:EURUSD",
+        "interval": "1",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#000000",
+        "enable_publishing": false,
+        "hide_top_toolbar": false,
+        "container_id": "tradingview_chart"
+      });
     </script>
+  </div>
+</div>
+
+</div>
+
+<div id="pricing-modal" class="modal">
+<h2 style="color:var(--gold);font-family:Orbitron;">SUBSCRIPTION PLANS</h2>
+
+<div class="pricing-card" style="border-color:#00ffcc;">
+<h3 style="color:#00ffcc;">FREE PLAN ($0)</h3>
+<p>Random Signals</p>
+<button class="activate-btn" onclick="activateFree()">USE FREE</button>
+</div>
+
+<div class="pricing-card" style="border-color:var(--neon-blue);">
+<h3 style="color:var(--neon-blue);">ADVANCED PLAN ($20)</h3>
+<p>Normal Signals</p>
+<input class="key-input" id="advkey" placeholder="ENTER ADV KEY">
+<button class="activate-btn" onclick="unlockAdv()">ACTIVATE ADVANCED</button>
+<button class="wa-btn" onclick="contactWA('ADVANCED PLAN')">SEND SCREENSHOT</button>
+</div>
+
+<div class="pricing-card">
+<h3 style="color:var(--gold);">PRO VIP ($30)</h3>
+<p>Deep Analysis + Support Resistance</p>
+<input class="key-input" id="vipkey" placeholder="ENTER VIP KEY">
+<button class="activate-btn" onclick="unlockVIP()">ACTIVATE PRO</button>
+<button class="wa-btn" onclick="contactWA('PRO PLAN')">SEND SCREENSHOT</button>
+</div>
+
+<p onclick="closePricing()" style="cursor:pointer;">CLOSE</p>
+</div>
+
+<script>
+let level=localStorage.getItem("farhan_level")||"free";
+updateStatus();
+
+function updateStatus(){
+let status=document.getElementById("top-status");
+if(level=="vip"){
+status.innerText="⭐ PRO MODE ACTIVE";
+status.className="status-pro";
+}
+else if(level=="advanced"){
+status.innerText="⚡ ADVANCED MODE ACTIVE";
+status.className="status-pro";
+status.style.color="#00f3ff";
+}
+else{
+status.innerText="⚠️ BASIC MODE";
+status.className="status-warning";
+}
+}
+
+function showPricing(){ document.getElementById("pricing-modal").style.display="flex"; }
+function closePricing(){ document.getElementById("pricing-modal").style.display="none"; }
+function activateFree(){ localStorage.setItem("farhan_level","free"); location.reload(); }
+
+function unlockAdv(){
+let key=document.getElementById("advkey").value;
+if(key=="ADV20"){ localStorage.setItem("farhan_level","advanced"); alert("ADVANCED MODE ACTIVATED"); location.reload(); }
+else{ alert("WRONG KEY"); }
+}
+
+function unlockVIP(){
+let key=document.getElementById("vipkey").value;
+if(key=="VIP30"){ localStorage.setItem("farhan_level","vip"); alert("PRO MODE ACTIVATED"); location.reload(); }
+else{ alert("WRONG KEY"); }
+}
+
+function contactWA(plan){ window.location.href="https://wa.me/923136908663?text=Farhan%20Bhai%20"+plan+"%20payment%20kar%20di"; }
+
+function runScan(){
+let result=document.getElementById("display");
+if(level=="vip"){ result.innerHTML=Math.random()<0.9?"CALL ⬆️":"PUT ⬇️"; }
+else if(level=="advanced"){ result.innerHTML=Math.random()<0.7?"CALL ⬆️":"PUT ⬇️"; }
+else{ result.innerHTML=Math.random()<0.5?"CALL ⬆️":"PUT ⬇️"; }
+}
+</script>
+
 </body>
     </html>
-    
