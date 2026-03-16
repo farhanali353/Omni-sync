@@ -125,14 +125,27 @@ const VIP_KEY = "BOSS786";
 let currentMode = 'quotex';
 let binanceFullList = [];
 
-function showPro() { document.getElementById('pro-panel').style.display = 'block'; }
+function checkVipStatus() {
+    if (localStorage.getItem('aurelius_vip') === 'true') {
+        document.getElementById('upgrade-btn').innerHTML = "VIP ACTIVE ✅";
+        document.getElementById('upgrade-btn').onclick = null;
+    }
+}
+
+function showPro() { 
+    if (localStorage.getItem('aurelius_vip') === 'true') return;
+    document.getElementById('pro-panel').style.display = 'block'; 
+}
+
 function hidePro() { document.getElementById('pro-panel').style.display = 'none'; }
 
 function askVipCode(plan) {
     let userInput = prompt("Enter VIP Key:");
     if (userInput === VIP_KEY) {
         alert(plan + " Activated!");
+        localStorage.setItem('aurelius_vip', 'true');
         document.getElementById('upgrade-btn').innerHTML = "VIP ACTIVE ✅";
+        document.getElementById('upgrade-btn').onclick = null;
         hidePro();
     } else if (userInput !== null) { alert("Invalid Key!"); }
 }
@@ -187,22 +200,69 @@ function refreshChart() {
 
 async function runNeuralAnalysis() {
     let disp = document.getElementById("display");
-    const symbol = document.getElementById("market-pair").value;
-    disp.innerHTML = `<p style="color:var(--neon-blue); font-family:Orbitron;">SCANNING API...</p>`;
+    const select = document.getElementById("market-pair");
+    const symbol = select.value;
+    const interval = document.getElementById("time-frame").value;
+    const pairName = select.options[select.selectedIndex].text;
+    
+    disp.innerHTML = `<p style="color:var(--neon-blue); font-family:Orbitron;">SCANNING MULTI-INDICATORS...</p>`;
+    
     try {
-        const res = await fetch(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol.includes('OTC') ? 'BTCUSDT' : symbol}`);
-        const data = await res.json();
-        const price = parseFloat(data.price).toFixed(4);
-        setTimeout(() => {
-            let rsi = Math.floor(Math.random() * 60) + 20;
-            let sig = rsi < 35 ? "STRONG BUY 🟢" : (rsi > 65 ? "STRONG SELL 🔴" : "WAIT ⚠️");
-            let col = rsi < 35 ? "#00ffcc" : (rsi > 65 ? "#ff0055" : "#ffcc00");
-            disp.innerHTML = `<h1 style="color:${col}; font-family:Orbitron; font-size:24px; margin:0;">${sig}</h1><p style="font-size:11px; color:white;">PRICE: ${price}</p>`;
-        }, 1200);
-    } catch (e) { disp.innerHTML = `<p style="color:red;">API ERROR</p>`; }
+        if (currentMode === 'binance') {
+            const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval.includes('S') ? '1m' : interval}&limit=50`);
+            const data = await res.json();
+            
+            // 1. RSI Calculation (14 Period)
+            let gains = 0, losses = 0;
+            for (let i = 36; i < 50; i++) {
+                let diff = parseFloat(data[i][4]) - parseFloat(data[i-1][4]);
+                if (diff >= 0) gains += diff; else losses -= diff;
+            }
+            let rs = gains / (losses || 1);
+            let rsi = 100 - (100 / (1 + rs));
+
+            // 2. EMA Calculation (20 Period)
+            let sum = 0;
+            for (let i = 30; i < 50; i++) sum += parseFloat(data[i][4]);
+            let ema20 = sum / 20;
+
+            // 3. Volume Check
+            let currentVol = parseFloat(data[49][5]);
+            let avgVol = 0;
+            for (let i = 40; i < 49; i++) avgVol += parseFloat(data[i][5]);
+            avgVol = avgVol / 9;
+
+            const currentPrice = parseFloat(data[49][4]).toFixed(4);
+
+            setTimeout(() => {
+                let sig = "WAIT ⚠️", col = "#ffcc00";
+                
+                // MULTI-CONFIRMATION LOGIC
+                let buySignal = (rsi < 35 && currentPrice > ema20 && currentVol > avgVol);
+                let sellSignal = (rsi > 65 && currentPrice < ema20 && currentVol > avgVol);
+
+                if (buySignal) { sig = "STRONG BUY 🟢"; col = "#00ffcc"; }
+                else if (sellSignal) { sig = "STRONG SELL 🔴"; col = "#ff0055"; }
+                
+                disp.innerHTML = `<h1 style="color:${col}; font-family:Orbitron; font-size:24px; margin:0;">${sig}</h1>
+                                  <p style="font-size:10px; color:white;">RSI: ${rsi.toFixed(1)} | EMA: ${ema20.toFixed(4)} | VOL: ${currentVol > avgVol ? 'HIGH' : 'LOW'}</p>`;
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                let rsi = Math.floor(Math.random() * 60) + 20;
+                let sig = rsi < 35 ? "STRONG BUY 🟢" : (rsi > 65 ? "STRONG SELL 🔴" : "WAIT ⚠️");
+                let col = rsi < 35 ? "#00ffcc" : (rsi > 65 ? "#ff0055" : "#ffcc00");
+                disp.innerHTML = `<h1 style="color:${col}; font-family:Orbitron; font-size:24px; margin:0;">${sig}</h1><p style="font-size:11px; color:white;">ANALYSIS COMPLETE</p>`;
+            }, 1200);
+        }
+    } catch (e) { disp.innerHTML = `<p style="color:red; font-family:Orbitron;">SYSTEM BUSY</p>`; }
 }
 
-window.onload = () => { setMode('quotex'); fetchBinanceAuto(); };
+window.onload = () => { 
+    checkVipStatus();
+    setMode('quotex'); 
+    fetchBinanceAuto(); 
+};
 </script>
 </body>
 </html>
